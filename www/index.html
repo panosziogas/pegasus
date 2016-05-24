@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="theme-color" content="#0000FF">
+      <meta name="msapplication-navbutton-color" content="#0000FF">
+      <meta name="apple-mobile-web-app-status-bar-style" content="#0000FF">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="stylesheet" type="text/css" href="./css/boot.css"/>
+      <link href="fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+      <link href="./css/navbar-fixed-top.css" rel="stylesheet">
+      <link href="./css/custom-style.css" rel="stylesheet">
+   </head>
+   <body>
+      <nav class="navbar navbar-default navbar-fixed-top navbar-md">
+         <div class="container">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle sidebar-toggle left-menu-bar-btn"> 
+               <span class="icon-bar">
+               </span> 
+               <span class="icon-bar">
+               </span> 
+               <span class="icon-bar">
+               <!--</span> </button> <a href="allsearch.html" class="transition"> <button type="button" class="navbar-toggle search-btn-onclick"> 
+               <span class="glyphicon glyphicon-search">-->
+               </span> </button> </a>
+               <span class="navbar-brand" href="#"><img src="img/Constellation.svg" class="img-responsive logo"/>
+               </span> 
+               <div class="dropdown pull-right"> </div>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+               <ul class="nav navbar-nav"> </ul>
+            </div>
+         </div>
+      </nav>
+      <div class="sidebar-overlay"></div>
+      <aside id="sidebar" class="sidebar sidebar-default sidebar-fixed-left" role="navigation">
+         <div> <img src="img/Constellation.svg" class="img-responsive left-logo"/> </div>
+         <ul class="nav sidebar-nav">
+            <li> <a href="about.html" class="transition"> 
+               <span class="glyphicon glyphicon-user">
+               </span>&nbsp; About Us </a> 
+            </li>
+            <li> <a href="#" data-toggle="modal" data-target="#contact"> 
+               <span class="glyphicon glyphicon-earphone">
+               </span>&nbsp; Contact Us </a> 
+            </li>
+            <li class="divider"></li>
+            <li class="dropdown">
+               <a class="ripple-effect dropdown-toggle" href="#" data-toggle="dropdown">
+               <span class="glyphicon glyphicon-list-alt">
+               </span>&nbsp; Tutorials<b class="caret"></b></a> 
+               <ul class="dropdown-menu ac-act-dropdown-menu">
+                  <li><a href="t1.html" class="transition">Introduction</a></li>
+                  <li><a href="t2.html" class="transition">Basic Syntax</a></li>
+                  <li><a href="t3.html" class="transition">Static Keywords</a></li>
+                  <li><a href="t4.html" class="transition">Header File</a></li>
+               </ul>
+            </li>
+            <li class="dropdown">
+               <a class="ripple-effect dropdown-toggle" href="#" data-toggle="dropdown">
+               <span class="glyphicon glyphicon-pencil">
+               </span>&nbsp; Programs<b class="caret"></b></a> 
+               <ul class="dropdown-menu ac-act-dropdown-menu">
+                  <li><a href="patterns.html" class="transition">Pattern Programs</a></li>
+                  <li><a href="sprlist.html" class="transition">String Programs</a></li>
+               </ul>
+            </li>
+            <li class="dropdown">
+               <a class="ripple-effect dropdown-toggle" href="#" data-toggle="dropdown">
+               <span class="glyphicon glyphicon-question-sign">
+               </span>&nbsp; Quizes<b class="caret"></b></a> 
+               <ul class="dropdown-menu ac-act-dropdown-menu">
+                  <li><a href="cplus-quiz.html" class="transition">Practice Quiz 1</a></li>
+               </ul>
+            </li>
+         </ul>
+      </aside>
+      <div class="container">
+      <div class="row" style="margin-top:15px; padding:5px;">
+      <!-- Nav tabs -->
+      <div class="card">
+         <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Output</a></li>
+            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+         </ul>
+         <!-- Tab panes -->
+         <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+               <img src="img/pegasus_head.JPG">
+               <br>
+               Pegasus Astro was created by amateur astronomers for amateur astronomers. Having been familiar with the field of astrophotography for more than ten years, we decided to create reliable and good priced products for use in amateur astronomy.<br><br>
+               These are our own personal astrophotography webpages:<br><br>
+              <a href="http://celestialpixels.com">http://celestialpixels.com</a> <br>
+              <a href=" http://astrocorinth.webs.com"> http://astrocorinth.webs.com</a> <br><br>              
+               We have realized that in this area many products we purchase are overpriced. As we are also activated in the field of astrophotography every new moon, we are well aware of any kind of difficulties and effort that are involved in order to create a decent astrophotograph.
+               We, for this reason, are certain that we know exactly what your needs are and what you require from our products.<br><br>
+               We are established in Athens, Greece and are confident we will not let you down.
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+               <div id="colorScreen">
+                  <h4>FlatBox Controller</h4>                  
+                  <div class="rangeDiv">                    
+                    <input type="range"  min="0" max="255" value="0" name="pwmRangeSlider" id="pwmRangeSlider" class="topcoat-range"/>
+                  </div>
+                  <div id="rgbText">
+                     &nbsp;
+                  </div>                 
+               </div>               
+            </div>
+            <div role="tabpanel" class="tab-pane" id="messages">Notepad project is a desktop application which is implemented in Java platform. Notepad Java Project tutorial and guide for developing code. Download Notepad desktop application project in Java with source code .</div>
+            <div role="tabpanel" class="tab-pane" id="settings">
+               <div id="connectionScreen">
+                  <h4>Paired bluetooth devices</h4>
+                  <ul id="deviceList" class="list-group">                                             
+                  </ul>                  
+                     <div style="margin: 10px">           
+                        <button class="btn btn-primary" id="refreshButton">Refresh</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="messageDiv">
+      <!-- Card Projects 
+         <div class="col-md-6 col-md-offset-3">
+             <div class="card">
+                 <div class="card-image">
+                     <img class="img-responsive" src="img/follow.png">
+                     <span class="card-title">Material Cards</span>
+                 </div>
+                 
+                 <div class="card-content">
+                     <p>Cards for display in portfolio style material design by Google.</p>
+                 </div>
+                 
+                 <div class="card-action">
+                     <a href="#" target="new_blank">Link</a>
+                     <a href="#" target="new_blank">Link</a>
+                     <a href="#" target="new_blank">Link</a>
+                     <a href="#" target="new_blank">Link</a>
+                     <a href="#" target="new_blank">Link</a>
+                 </div>
+             </div>
+         </div>  
+         
+           <div class="col-md-4 col-md-offset-4">
+         <div class="material-button-anim">
+           <ul class="list-inline" id="options">
+             <li class="option">
+               <button class="material-button option1" type="button">
+                 <span class="fa fa-phone" aria-hidden="true"></span>
+               </button>
+             </li>
+             <li class="option">
+               <button class="material-button option2" type="button">
+                 <span class="fa fa-envelope-o" aria-hidden="true"></span>
+               </button>
+             </li>
+             <li class="option">
+               <button class="material-button option3" type="button">
+                 <span class="fa fa-pencil" aria-hidden="true"></span>
+               </button>
+             </li>
+           </ul>
+           <button class="material-button material-button-toggle" type="button">
+             <span class="fa fa-plus" aria-hidden="true"></span>
+           </button>
+         </div>
+         </div>
+           
+          </div>
+         </div>
+         <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style=" z-index:999999999 !important">
+          <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                <div class="modal-header">
+                   <h4 class="modal-title" id="myModalLabel">Contact Us</h4>
+                </div>
+                <div class="modal-body" align="center">
+                   <h5>Designed By Sharda Enterprises</h5>
+                   <h6>Powered By fastlearning.in</h6>
+                </div>
+                <div class="modal-footer"> <button type="button" class="close-btn" data-dismiss="modal">Close</button> </div>
+             </div>-->
+          </div>
+         </div>
+      <script src="./js/jquery.min.js"></script> 
+      <script src="./js/custom.js"></script> 
+      <script src="./js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="cordova.js"></script>
+      <script type="text/javascript" src="js/index.js"></script>
+      <!--<script src="js/jquery-1.9.1.min.js"></script>-->
+      <script type="text/javascript" src="js/underscore-min.js"></script>
+      <script type="text/javascript">
+         app.initialize();
+      </script>     
+   </body>
+</html>
