@@ -65,8 +65,7 @@ var app = {
 };
 
 var blueToothCtrl = {
-    list: function(event) {
-        deviceList.firstChild.innerHTML = "Discovering...";
+    list: function(event) {        
         blueToothCtrl.btStatus("Looking for Bluetooth Devices...");
         bluetoothSerial.list(blueToothCtrl.ondevicelist, blueToothCtrl.generateFailureFunction("List Failed"));
     },
@@ -448,23 +447,25 @@ var fileHandler = {
     getFileSystemError: function(error){
         console.log("Error getting file system");
     },
-    getFileEntryForWrite: function(fileEntry){
-         fileEntry.createWriter(fileHandler.writeFile, fileHandler.getFileSystemError());  
-         fileHandler.readFile(fileEntry);
+    getFileEntryForWrite: function(fileEntry){         
+        fileEntry.createWriter(fileHandler.writeFile,fileHandler.getFileSystemError);        
     },
     getFileEntryForRead: function(fileEntry){         
          fileHandler.readFile(fileEntry);
     },
     writeFile: function(writer){
+    console.log("Writing in File");
     var outuput1 = document.getElementById("output1").value;
     var outuput2 = document.getElementById("output2").value;
     var outuput3 = document.getElementById("output3").value;
     var outuput4 = document.getElementById("output4").value;
     var outPutAll = outuput1+";"+outuput2+";"+outuput3+";"+outuput4;
     console.log(outPutAll); 
-    writer.write(outPutAll); 
+    writer.write(outPutAll);     
+    fileHandler.getLabesOnStart();
     },
     readFile: function(fileEntry){
+        console.log("Reading from File");
         fileEntry.file(function (file) {
             var reader = new FileReader();
         reader.onloadend = function() {            
@@ -476,12 +477,11 @@ var fileHandler = {
             document.getElementById("label1").innerHTML = outuput1;
             document.getElementById("label2").innerHTML = outuput2;
             document.getElementById("label3").innerHTML = outuput3;
-            document.getElementById("label4").innerHTML = outuput4;
-            
-//            document.getElementById("output1").value = outuput1;
-//            document.getElementById("output2").value = outuput2;
-//            document.getElementById("output3").value = outuput3;
-//            document.getElementById("output4").value = outuput4;
+            document.getElementById("label4").innerHTML = outuput4;            
+            document.getElementById("output1").value = outuput1;
+            document.getElementById("output2").value = outuput2;
+            document.getElementById("output3").value = outuput3;
+            document.getElementById("output4").value = outuput4;
         };
         reader.readAsText(file);
     }, fileHandler.getFileSystemError());
