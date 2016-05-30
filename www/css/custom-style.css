@@ -90,3 +90,90 @@ img {
     width: 100%;
     height: auto;
 }
+
+#map{
+    width: 100%;
+    height: 200px;
+}
+
+#canvasLinear1{
+    width: 100%;
+    height: auto;
+    position:relative;
+}
+
+#radialTemp{
+    width: 100%;
+    height: auto;
+    position:relative;
+}
+
+body {
+    background-color: #000000!important; 
+    color: white;
+}
+
+
+
+
+.togglesTable {
+		border:0px solid #C0C0C0;
+		border-collapse:collapse;
+		padding:2px;
+                position:relative;
+                width: 100%;
+	}
+	.togglesTable th {
+		border:0px solid #C0C0C0;
+		padding:2px;
+		background:#F0F0F0;
+	}
+	.togglesTable td {
+		border:0px solid #C0C0C0;
+		padding:2px;
+	}
+        
+.heatersTable {
+		border:0px solid #C0C0C0;
+		border-collapse:collapse;
+		padding:2px;
+                 position:relative;
+                width: 100%;
+	}
+	.heatersTable th {
+		border:0px solid #C0C0C0;
+		padding:2px;
+		background:#F0F0F0;
+	}
+	.heatersTable td {
+		border:0px solid #C0C0C0;
+		padding:2px;
+	}        
+        
+.container { 
+    background: #808080;          
+} 
+
+.card{
+    background: #000000;
+    border: 0px;
+}
+
+.lcdsTable {
+		border:0px solid #C0C0C0;
+		border-collapse:collapse;
+		padding:1px;  
+                position:relative;
+                width: 100%;
+	}
+	.lcdsTable th {
+		border:0px solid #C0C0C0;
+		padding:1px;
+		background:#F0F0F0;
+	}
+	.lcdsTable td {
+		border:0px solid #C0C0C0;
+		padding:1px;
+	}
+
+       

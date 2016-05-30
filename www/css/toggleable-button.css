@@ -1,0 +1,125 @@
+.toggleable-button {
+  display: none;
+}
+.toggleable-button-outer {
+  background-color: #999;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 1em !important;
+  height: 40px;
+  padding: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  width: 100px;
+}
+.toggleable-button-inner {
+  background-color: #333;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.9);
+  height: 34px;
+  margin: 3px;
+  overflow: hidden;
+  width: 94px;
+}
+.toggleable-button-inner-text {
+  color: #ffffff;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1em;
+  font-weight: 600;
+  float: left;
+  position: relative;
+  left: 20px;
+  line-height: 34px;
+}
+.toggleable-button-handle {
+  background-color: #73a5e6;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+  -webkit-box-shadow: 0 0 15px #000000, inset 0 0 6px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0 0 15px #000000, inset 0 0 6px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 15px #000000, inset 0 0 6px rgba(0, 0, 0, 0.75);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  height: 100%;
+  position: relative;
+  width: 33px;
+}
+.zoom-2 {
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  border-radius: 24px;
+  -webkit-box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.9);
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.9);
+  height: 80px;
+  width: 200px;
+}
+.zoom-2 > div {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  height: 68px;
+  margin: 6px;
+  width: 188px;
+}
+.zoom-2 > div > div:first-child {
+  -webkit-border-radius: 18px;
+  -moz-border-radius: 18px;
+  border-radius: 18px;
+  -webkit-box-shadow: 0 0 30px #000000, inset 0 0 12px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0 0 30px #000000, inset 0 0 12px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 30px #000000, inset 0 0 12px rgba(0, 0, 0, 0.75);
+  width: 66px;
+}
+.zoom-2 > div > div:last-child {
+  font-size: 2em;
+  line-height: 68px;
+}
+.zoom-3 {
+  -webkit-border-radius: 36px;
+  -moz-border-radius: 36px;
+  border-radius: 36px;
+  -webkit-box-shadow: 3px 3px 18px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 3px 3px 18px rgba(0, 0, 0, 0.9);
+  box-shadow: 3px 3px 18px rgba(0, 0, 0, 0.9);
+  height: 120px;
+  width: 300px;
+}
+.zoom-3 > div {
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
+  border-radius: 28px;
+  height: 102px;
+  margin: 9px;
+  width: 282px;
+}
+.zoom-3 > div > div:first-child {
+  -webkit-border-radius: 27px;
+  -moz-border-radius: 27px;
+  border-radius: 27px;
+  -webkit-box-shadow: 0 0 45px #000000, inset 0 0 18px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0 0 45px #000000, inset 0 0 18px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 45px #000000, inset 0 0 18px rgba(0, 0, 0, 0.75);
+  width: 99px;
+}
+.zoom-3 > div > div:last-child {
+  font-size: 3em;
+  line-height: 102px;
+}
