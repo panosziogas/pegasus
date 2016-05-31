@@ -430,6 +430,7 @@ var screenBrightness = {
     },
     lcdOn: function() {
         var VolumeControl = cordova.plugins.brightness;
+        VolumeControl.setBrightness(0, screenBrightness.dimOnSuccess, screenBrightness.dimOnFail);
         var checked = document.getElementById("screenOn").checked;
         if (checked === true) {
             VolumeControl.setKeepScreenOn(true);

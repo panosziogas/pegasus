@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--
+   To change this license header, choose License Headers in Project Properties.
+   To change this template file, choose Tools | Templates
+   and open the template in the editor.
+   -->
+<html>
+   <head>
+      <title>TODO supply a title</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+   <body>
+      <script src="./js/jquery.min.js"></script>
+      <script src="./js/custom.js"></script> 
+      <script type="text/javascript" src="cordova.js"></script>  
+      <script type='text/javascript' src='js/tween.js'></script>
+      <script type="text/javascript" src="js/underscore-min.js"></script>
+      <script type="text/javascript">
+         var app = {
+         initialize: function() {            
+         this.bind();        
+         },
+         bind: function() {        
+         document.addEventListener('deviceready', this.deviceready, false);                    
+         },
+         deviceready: function() {            
+             var brightNessOnChange = _.throttle(screenBrightness.dimLcd, 50);
+         $('#dimDisplaySlider').on('change', brightNessOnChange); 
+         }
+         };         
+         
+         var screenBrightness = {
+         dimLcd: function() {
+         var VolumeControl = cordova.plugins.brightness;
+         var dimValue = dimDisplaySlider.value;
+         console.log(dimValue);
+         VolumeControl.setBrightness(dimValue, screenBrightness.dimOnSuccess, screenBrightness.dimOnFail);
+         },
+         dimOnSuccess: function() {
+         console.log("Dim succeed");
+         },
+         dimOnFail: function() {
+         console.log("Dim failed");
+         },
+         lcdOn: function() {
+         var VolumeControl = cordova.plugins.brightness;         
+         var checked = document.getElementById("screenOn").checked;
+         if (checked === true) {
+           VolumeControl.setKeepScreenOn(true);           
+         } else {
+           VolumeControl.setKeepScreenOn(false);          
+         }
+         }
+         };
+      </script>     
+      <script type="text/javascript">
+         app.initialize();
+      </script>    
+      <table class="flatBoxTable" bgcolor="#808080">
+         <tbody>
+            <tr>
+               <td>
+                  <div class="rangeDiv">
+                     <input type="range"  min="0" max="1" value="1" step ="0.01" name="dimDisplaySlider" id="dimDisplaySlider" class="topcoat-range"/>
+                     <div class="checkbox">
+                        <label><input id="screenOn" type="checkbox" onClick="screenBrightness.lcdOn()">Keep Display ON</label>
+                     </div>
+                  </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </body>
+</html>
+<html>
+   <head>
+      <style type="text/css">
+      input[type=range] {
+      -webkit-appearance: none;
+      margin: 18px 0;
+      width: 100%;
+      }
+      input[type=range]:focus {
+      outline: none;
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 8.4px;
+      cursor: pointer;
+      animate: 0.2s;
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      background: #3071a9;
+      border-radius: 1.3px;
+      border: 0.2px solid #010101;
+      }
+      input[type=range]::-webkit-slider-thumb {
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      border: 1px solid #000000;
+      height: 36px;
+      width: 16px;
+      border-radius: 3px;
+      background: #ffffff;
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -14px;
+      }
+      input[type=range]:focus::-webkit-slider-runnable-track {
+      background: #367ebd;
+      }
+      input[type=range]::-moz-range-track {
+      width: 100%;
+      height: 8.4px;
+      cursor: pointer;
+      animate: 0.2s;
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      background: #3071a9;
+      border-radius: 1.3px;
+      border: 0.2px solid #010101;
+      }
+      input[type=range]::-moz-range-thumb {
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      border: 1px solid #000000;
+      height: 36px;
+      width: 16px;
+      border-radius: 3px;
+      background: #ffffff;
+      cursor: pointer;
+      }
+      input[type=range]::-ms-track {
+      width: 100%;
+      height: 8.4px;
+      cursor: pointer;
+      animate: 0.2s;
+      background: transparent;
+      border-color: transparent;
+      border-width: 16px 0;
+      color: transparent;
+      }
+      input[type=range]::-ms-fill-lower {
+      background: #2a6495;
+      border: 0.2px solid #010101;
+      border-radius: 2.6px;
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      }
+      input[type=range]::-ms-fill-upper {
+      background: #3071a9;
+      border: 0.2px solid #010101;
+      border-radius: 2.6px;
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      }
+      input[type=range]::-ms-thumb {
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      border: 1px solid #000000;
+      height: 36px;
+      width: 16px;
+      border-radius: 3px;
+      background: #ffffff;
+      cursor: pointer;
+      }
+      input[type=range]:focus::-ms-fill-lower {
+      background: #3071a9;
+      }
+      input[type=range]:focus::-ms-fill-upper {
+      background: #367ebd;
+      }
+      .flatBoxTable {
+      border:0px solid #C0C0C0;
+      border-collapse:collapse;
+      padding:0px;
+      position:relative;
+      width: 100%;
+      }
+      .flatBoxTable th {
+      border:0px solid #C0C0C0;
+      padding:0px;
+      background:#F0F0F0;
+      }
+      .flatBoxTable td {
+      border:0px solid #C0C0C0;
+      padding:0px;
+      }
+</html>
