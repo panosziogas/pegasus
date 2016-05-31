@@ -2,19 +2,11 @@
 /* global cordova, console, $, bluetoothSerial, _, refreshButton, deviceList, previewColor, red, green, blue, disconnectButton, connectionScreen, colorScreen, rgbText, messageDiv */
 'use strict';
 
-var linear3;
-var radial1;
-var flatBoxBar;
-var dewHeater1Bar;
-var dewHeater2Bar;
+var flatBoxBar,dewHeater1Bar,dewHeater2Bar;
 var temp, hum, dp, voltage, current, power;
-//hum,dp,voltage,current,power;
-var temperatureLcd;
-var humidityLcd;
-var dewLcd;
-var voltageLcd;
-var currLcd;
-var powLcd;
+var temperatureLcd,humidityLcd,dewLcd,voltageLcd,currLcd,powLcd;
+
+
 
 var app = {
     initialize: function() {
@@ -384,9 +376,11 @@ var geo = {
         var longitude = position.coords.longitude;
         var latitude = position.coords.latitude;
 
+
         var element = document.getElementById('geolocation');
-        element.innerHTML = 'Latitude: ' + latitude +
-            '  Longitude: ' + longitude + '<br />'
+        element.innerHTML = 'Latitude: ' + latitude + ' <br>' + 'Longitude: ' + longitude;
+
+        getWeather(latitude, longitude);
 
         var latLong = new google.maps.LatLng(latitude, longitude);
         var mapOptions = {
@@ -512,3 +506,35 @@ var fileHandler = {
         }, fileHandler.getFileSystemError());
     }
 };
+
+function getWeather(latitude, longitude) {
+    var OpenWeatherAppKey = "9d265e6d8e3b6619e15feba5537bbd69";
+    var queryString = 'http://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=' +
+        OpenWeatherAppKey + '&units=metric';
+    console.log(queryString);
+    $.getJSON(queryString, function(results) {
+        if (results.weather.length) {
+            $.getJSON(queryString, function(results) {
+                if (results.weather.length) {
+                    $('#weather_city_description').text("City: " + results.name);
+                    $('#weather_temp').text("Temperature: " + results.main.temp + " °C");
+                    $('#weather_wind').text("Wind: " + results.wind.speed + "km/h");
+                    $('#weather_humidity').text("Humidity: " + results.main.humidity + " %");
+                    $('#weather_visibility').text("Visibility: " + results.weather[0].main);
+                    $('#weather_pressure').text("Pressure: " + results.main.pressure + " mB");
+                    var sunriseDate = new Date(results.sys.sunrise);
+                    $('#weather_sunrise').text("Sunrise: " + sunriseDate.toLocaleTimeString());
+                    var sunsetDate = new Date(results.sys.sunset);
+                    $('#weather_sunset').text("Sunset: " + sunsetDate.toLocaleTimeString());
+                }
+            });
+        }
+    }).fail(function() {
+        console.log("error getting location");
+    });
+}
+
+function onWeatherError(error) {
+    console.log('code: ' + error.code + '\n' +
+        'message: ' + error.message + '\n');
+}
