@@ -7,6 +7,14 @@ var radial1;
 var flatBoxBar;
 var dewHeater1Bar;
 var dewHeater2Bar;
+var temp, hum, dp, voltage, current, power;
+//hum,dp,voltage,current,power;
+var temperatureLcd;
+var humidityLcd;
+var dewLcd;
+var voltageLcd;
+var currLcd;
+var powLcd;
 
 var app = {
     initialize: function() {
@@ -35,7 +43,7 @@ var app = {
 
         var throttledOnDew2Change = _.throttle(dewHeatersCtrl.dewHeater2OnChange, 50);
         $('#dewHeater2Slider').on('change', throttledOnDew2Change);
-        
+
         var brightNessOnChange = _.throttle(screenBrightness.dimLcd, 50);
         $('#dimDisplaySlider').on('change', brightNessOnChange);
         //$('#settings').on('click', app.list);          
@@ -47,7 +55,7 @@ var app = {
         heatersOff.ontouchstart = dewHeatersCtrl.dewHeatersOff;
         heatersFull.ontouchstart = dewHeatersCtrl.dewHeatersMax;
         mountToggle.ontouchstart = powerToggles.mountToggle;
-        navigator.geolocation.getCurrentPosition(geo.geoOnSuccess, geo.geoOnFail);  
+        navigator.geolocation.getCurrentPosition(geo.geoOnSuccess, geo.geoOnFail);
         saveLabels.ontouchstart = fileHandler.getLabelValueAndSave;
         fileHandler.getLabesOnStart();
     },
@@ -65,22 +73,22 @@ var app = {
 };
 
 var blueToothCtrl = {
-    list: function(event) {        
+    list: function(event) {
         blueToothCtrl.btStatus("Looking for Bluetooth Devices...");
         bluetoothSerial.list(blueToothCtrl.ondevicelist, blueToothCtrl.generateFailureFunction("List Failed"));
     },
     connect: function(e) {
-        //app.bltoothStatus("Connecting...");
         var device = e.target.getAttribute('deviceId');
         blueToothCtrl.btStatus("Requesting connection to " + device);
         bluetoothSerial.connect(device, blueToothCtrl.onconnect(device), blueToothCtrl.ondisconnect);
     },
     disconnect: function(event) {
-        if (event) {
-            event.preventDefault();
-        }
-        blueToothCtrl.btStatus("Disconnecting..." + device);
-        bluetoothSerial.disconnect(blueToothCtrl.ondisconnect);
+        //        if (event) {
+        //            event.preventDefault();
+        //        }
+        blueToothCtrl.btStatus("Disconnecting...");
+        console.log(event);
+        bluetoothSerial.disconnect(blueToothCtrl.ondisconnect, false);
     },
     onconnect: function(device) {
         var listItem;
@@ -90,13 +98,19 @@ var blueToothCtrl = {
         listItem.innerHTML = "<font color='black'>Connected:</font>" + "<span class='badge'>" + device + "</span>" + "</i>";
         deviceList.appendChild(listItem);
         blueToothCtrl.btStatus("Connected to " + device);
+        console.log("Connected to " + device);
         setInterval(function() {
-           printOut();
-        }, 1500);
+            getBtData();
+        }, 5000);
     },
     ondisconnect: function() {
+        var listItem;
+        deviceList.innerHTML = "";
+        listItem = document.createElement('li');
+        listItem.className = "list-group-item";
+        listItem.innerHTML = "<font color='black'>Disconnected</font></i>";
+        deviceList.appendChild(listItem);
         blueToothCtrl.btStatus("Disconnected");
-        blueToothCtrl.list;
     },
     ondevicelist: function(devices) {
         var listItem, deviceId;
@@ -114,7 +128,7 @@ var blueToothCtrl = {
                 deviceId = "ERROR " + JSON.stringify(device);
             }
             listItem.setAttribute('deviceId', device.address);
-            listItem.innerHTML ="<font color='black'>"+ device.name + "</font></br><i>" + "<span class='badge'>" + deviceId + "</span>" + "</i>";
+            listItem.innerHTML = "<font color='black'>" + device.name + "</font></br><i>" + "<span class='badge'>" + deviceId + "</span>" + "</i>";
             deviceList.appendChild(listItem);
         });
 
@@ -152,13 +166,43 @@ var blueToothCtrl = {
         blueToothCtrl.timeoutId = setTimeout(function() {
             btMessage.innerText = "";
         }, 4000);
+    },
+    btReadSuccess: function(data) {
+        console.log(data);
+        if (data) {
+            var sensors = data.split(":");
+            voltage = sensors[1];
+            current = sensors[2];
+            power = sensors[3];
+            hum = sensors[4];
+            temp = sensors[5];
+            dp = sensors[6];
+            setLcdValue(temperatureLcd, temp);
+            setLcdValue(humidityLcd, hum);
+            setLcdValue(dewLcd, dp);
+            setLcdValue(voltageLcd, voltage);
+            setLcdValue(currLcd, current);
+            setLcdValue(powLcd, power);
+            var outPuts = sensors[7];
+            console.log("Out1:" + outPuts[0]);
+            console.log("Out2:" + outPuts[1]);
+            console.log("Out3:" + outPuts[2]);
+            console.log("Out4:" + outPuts[3]);
+        }
+    },
+    btReadFail: function() {
+        console.log("bt read failed");
     }
 };
 
+function getBtData() {
+    blueToothCtrl.sendToPowerBox("A\n");
+    bluetoothSerial.read(blueToothCtrl.btReadSuccess, blueToothCtrl.btReadFail);
+}
+
 var lcdScreens = {
     tempLcd: function() {
-        var temperatureLcd;
-        var sections = [steelseries.Section(0, 70, 'rgba(255, 0, 0, 1.0)'),
+        var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
             steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
             steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
         ];
@@ -170,13 +214,9 @@ var lcdScreens = {
             lcdDecimals: 1
         });
         temperatureLcd.setLcdColor(steelseries.LcdColor.SECTIONS);
-        setInterval(function() {
-            setRandomValue(temperatureLcd, 100);
-        }, 1500);
     },
     humLcd: function() {
-        var humidityLcd;
-        var sections = [steelseries.Section(0, 70, 'rgba(255, 0, 0, 1.0)'),
+        var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
             steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
             steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
         ];
@@ -188,14 +228,10 @@ var lcdScreens = {
             lcdDecimals: 1
         });
         humidityLcd.setLcdColor(steelseries.LcdColor.SECTIONS);
-        // Start the random update
-        setInterval(function() {
-            setRandomValue(humidityLcd, 100);
-        }, 1500);
+
     },
     dewPointLcd: function() {
-        var dewLcd;
-        var sections = [steelseries.Section(0, 70, 'rgba(255, 0, 0, 1.0)'),
+        var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
             steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
             steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
         ];
@@ -207,14 +243,9 @@ var lcdScreens = {
             lcdDecimals: 1
         });
         dewLcd.setLcdColor(steelseries.LcdColor.SECTIONS);
-        // Start the random update
-        setInterval(function() {
-            setRandomValue(dewLcd, 100);
-        }, 1500);
     },
     voltLcd: function() {
-        var voltageLcd;
-        var sections = [steelseries.Section(0, 70, 'rgba(255, 0, 0, 1.0)'),
+        var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
             steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
             steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
         ];
@@ -226,14 +257,9 @@ var lcdScreens = {
             lcdDecimals: 1
         });
         voltageLcd.setLcdColor(steelseries.LcdColor.SECTIONS);
-        // Start the random update
-        setInterval(function() {
-            setRandomValue(voltageLcd, 100);
-        }, 1500);
     },
     currentLcd: function() {
-        var currLcd;
-        var sections = [steelseries.Section(0, 70, 'rgba(255, 0, 0, 1.0)'),
+        var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
             steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
             steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
         ];
@@ -245,14 +271,9 @@ var lcdScreens = {
             lcdDecimals: 1
         });
         currLcd.setLcdColor(steelseries.LcdColor.SECTIONS);
-        // Start the random update
-        setInterval(function() {
-            setRandomValue(currLcd, 100);
-        }, 1500);
     },
     powerLcd: function() {
-        var powLcd;
-        var sections = [steelseries.Section(0, 70, 'rgba(255, 0, 0, 1.0)'),
+        var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
             steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
             steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
         ];
@@ -264,20 +285,12 @@ var lcdScreens = {
             lcdDecimals: 1
         });
         powLcd.setLcdColor(steelseries.LcdColor.SECTIONS);
-        // Start the random update
-        setInterval(function() {
-            setRandomValue(powLcd, 100);
-        }, 1500);
     }
 };
 
 
-function setRandomValue(gauge, range) {
-    gauge.setValue(Math.random() * range);
-}
-
-function printOut() {
-     console.log("Interval Print");
+function setLcdValue(gauge, range) {
+    gauge.setValue(Number(range));
 }
 
 var flatBoxCtrl = {
@@ -321,6 +334,7 @@ var dewHeatersCtrl = {
         var roundPwm = Math.round(dew1Pwm);
         dewHeater1Bar.setPercent(roundPwm);
         dewHeater1Text.innerText = 'Duty Cycle: ' + roundPwm + "%";
+        blueToothCtrl.sendToPowerBox("L:" + dewValue1 + "\n");
     },
     dewHeater2OnChange: function(evt) {
         var dewValue2 = dewHeater2Slider.value;
@@ -328,6 +342,7 @@ var dewHeatersCtrl = {
         var roundPwm = Math.round(dew2Pwm);
         dewHeater2Bar.setPercent(roundPwm);
         dewHeater2Text.innerText = 'Duty Cycle: ' + roundPwm + "%";
+        blueToothCtrl.sendToPowerBox("M:" + dewValue2 + "\n");
     },
     dewHeatersOff: function() {
         dewHeater1Bar.setPercent(0);
@@ -338,6 +353,8 @@ var dewHeatersCtrl = {
         var dewHeater2Value = document.getElementById("dewHeater2Slider");
         dewHeater1Value.value = 0;
         dewHeater2Value.value = 0;
+        blueToothCtrl.sendToPowerBox("L:0\n");
+        blueToothCtrl.sendToPowerBox("M:0\n");
     },
     dewHeatersMax: function() {
         dewHeater1Bar.setPercent(100);
@@ -347,7 +364,9 @@ var dewHeatersCtrl = {
         var dewHeater1Value = document.getElementById("dewHeater1Slider");
         var dewHeater2Value = document.getElementById("dewHeater2Slider");
         dewHeater1Value.value = 255;
-        dewHeater2Value.value = 255;       
+        dewHeater2Value.value = 255;
+        blueToothCtrl.sendToPowerBox("L:255\n");
+        blueToothCtrl.sendToPowerBox("M:255\n");
     },
     dewHeatersAuto: function() {
         var checked = document.getElementById("dewAuto").checked;
@@ -404,87 +423,92 @@ var powerToggles = {
 };
 
 var screenBrightness = {
-    dimLcd: function(){
-       var VolumeControl = cordova.plugins.brightness;
-       var dimValue = dimDisplaySlider.value;
-       VolumeControl.setBrightness(dimValue, screenBrightness.dimOnSuccess, screenBrightness.dimOnFail);
+    dimLcd: function() {
+        var VolumeControl = cordova.plugins.brightness;
+        var dimValue = dimDisplaySlider.value;
+        VolumeControl.setBrightness(dimValue, screenBrightness.dimOnSuccess, screenBrightness.dimOnFail);
     },
-    dimOnSuccess: function(){
+    dimOnSuccess: function() {
         console.log("Dim succeed");
     },
-    dimOnFail: function(){
+    dimOnFail: function() {
         console.log("Dim failed");
     },
-    lcdOn: function(){
+    lcdOn: function() {
         var VolumeControl = cordova.plugins.brightness;
         var checked = document.getElementById("screenOn").checked;
         if (checked === true) {
             VolumeControl.setKeepScreenOn(true);
             console.log("LCD ON");
         } else {
-           VolumeControl.setKeepScreenOn(false);
-           console.log("LCD OFF");
+            VolumeControl.setKeepScreenOn(false);
+            console.log("LCD OFF");
         }
     }
 };
 
 
 var fileHandler = {
-    getLabelValueAndSave: function(){
-     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileHandler.getFileSystemForWrite, fileHandler.getFileSystemError());    
+    getLabelValueAndSave: function() {
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileHandler.getFileSystemForWrite, fileHandler.getFileSystemError());
     },
-    getLabesOnStart: function(){
-       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileHandler.getFileSystemForRead, fileHandler.getFileSystemError());  
+    getLabesOnStart: function() {
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileHandler.getFileSystemForRead, fileHandler.getFileSystemError());
     },
-    getFileSystemForWrite: function(fileSystem){
-    console.log("Got file system for write");
-    fileSystem.root.getFile("customLabels.txt", {create: true, exclusive: false}, fileHandler.getFileEntryForWrite, fileHandler.getFileSystemError);  
+    getFileSystemForWrite: function(fileSystem) {
+        console.log("Got file system for write");
+        fileSystem.root.getFile("customLabels.txt", {
+            create: true,
+            exclusive: false
+        }, fileHandler.getFileEntryForWrite, fileHandler.getFileSystemError);
     },
-    getFileSystemForRead: function(fileSystem){
-    console.log("Got file system for read");
-    fileSystem.root.getFile("customLabels.txt", {create: true, exclusive: false}, fileHandler.getFileEntryForRead, fileHandler.getFileSystemError);  
+    getFileSystemForRead: function(fileSystem) {
+        console.log("Got file system for read");
+        fileSystem.root.getFile("customLabels.txt", {
+            create: true,
+            exclusive: false
+        }, fileHandler.getFileEntryForRead, fileHandler.getFileSystemError);
     },
-    getFileSystemError: function(error){
+    getFileSystemError: function(error) {
         console.log("Error getting file system");
     },
-    getFileEntryForWrite: function(fileEntry){         
-        fileEntry.createWriter(fileHandler.writeFile,fileHandler.getFileSystemError);        
+    getFileEntryForWrite: function(fileEntry) {
+        fileEntry.createWriter(fileHandler.writeFile, fileHandler.getFileSystemError);
     },
-    getFileEntryForRead: function(fileEntry){         
-         fileHandler.readFile(fileEntry);
+    getFileEntryForRead: function(fileEntry) {
+        fileHandler.readFile(fileEntry);
     },
-    writeFile: function(writer){
-    console.log("Writing in File");
-    var outuput1 = document.getElementById("output1").value;
-    var outuput2 = document.getElementById("output2").value;
-    var outuput3 = document.getElementById("output3").value;
-    var outuput4 = document.getElementById("output4").value;
-    var outPutAll = outuput1+";"+outuput2+";"+outuput3+";"+outuput4;
-    console.log(outPutAll); 
-    writer.write(outPutAll);     
-    fileHandler.getLabesOnStart();
+    writeFile: function(writer) {
+        console.log("Writing in File");
+        var outuput1 = document.getElementById("output1").value;
+        var outuput2 = document.getElementById("output2").value;
+        var outuput3 = document.getElementById("output3").value;
+        var outuput4 = document.getElementById("output4").value;
+        var outPutAll = outuput1 + ";" + outuput2 + ";" + outuput3 + ";" + outuput4;
+        console.log(outPutAll);
+        writer.write(outPutAll);
+        fileHandler.getLabesOnStart();
     },
-    readFile: function(fileEntry){
+    readFile: function(fileEntry) {
         console.log("Reading from File");
-        fileEntry.file(function (file) {
+        fileEntry.file(function(file) {
             var reader = new FileReader();
-        reader.onloadend = function() {            
-            var labelsArray = this.result.split(";");
-            var outuput1 = labelsArray[0];
-            var outuput2 = labelsArray[1];
-            var outuput3 = labelsArray[2];
-            var outuput4 = labelsArray[3];            
-            document.getElementById("label1").innerHTML = outuput1;
-            document.getElementById("label2").innerHTML = outuput2;
-            document.getElementById("label3").innerHTML = outuput3;
-            document.getElementById("label4").innerHTML = outuput4;            
-            document.getElementById("output1").value = outuput1;
-            document.getElementById("output2").value = outuput2;
-            document.getElementById("output3").value = outuput3;
-            document.getElementById("output4").value = outuput4;
-        };
-        reader.readAsText(file);
-    }, fileHandler.getFileSystemError());
+            reader.onloadend = function() {
+                var labelsArray = this.result.split(";");
+                var outuput1 = labelsArray[0];
+                var outuput2 = labelsArray[1];
+                var outuput3 = labelsArray[2];
+                var outuput4 = labelsArray[3];
+                document.getElementById("label1").innerHTML = outuput1;
+                document.getElementById("label2").innerHTML = outuput2;
+                document.getElementById("label3").innerHTML = outuput3;
+                document.getElementById("label4").innerHTML = outuput4;
+                document.getElementById("output1").value = outuput1;
+                document.getElementById("output2").value = outuput2;
+                document.getElementById("output3").value = outuput3;
+                document.getElementById("output4").value = outuput4;
+            };
+            reader.readAsText(file);
+        }, fileHandler.getFileSystemError());
     }
 };
-

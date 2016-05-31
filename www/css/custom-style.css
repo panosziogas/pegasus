@@ -176,4 +176,12 @@ body {
 		padding:1px;
 	}
 
-       
+/*  .list-group-item {
+    position: relative;
+    display: block;
+    padding: 0px 15px;  adjust here 
+    margin-bottom: -1px;
+    border: 1px solid #ddd;
+    line-height: 1em  set to text height 
+}     */
+
