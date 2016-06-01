@@ -111,6 +111,7 @@ var blueToothCtrl = {
         listItem.innerHTML = "Disconnected";
         deviceList.appendChild(listItem);
         blueToothCtrl.btStatus("Disconnected");
+        navigator.notification.alert("Bluetooth Disconnected!", blueToothCtrl.list, "Error", "ok");
     },
     ondevicelist: function(devices) {
         var listItem, deviceId;
@@ -327,6 +328,7 @@ var flatBoxCtrl = {
         flatBoxBar.setPercent(roundPwm);
         rgbText.innerText = 'Duty Cycle: ' + roundPwm + "%";              
         blueToothCtrl.sendToPowerBox("N:" + flatBoxValue + "\n");
+         console.log("N:" + flatBoxValue + "\n");
     }
 };
 

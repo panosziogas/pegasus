@@ -189,3 +189,9 @@ body {
 .devide-items {
     color: #000;
 }
+
+.myDiv{
+    width: 50%;
+    height: auto;
+    position:relative;
+}
