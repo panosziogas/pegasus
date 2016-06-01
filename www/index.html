@@ -17,6 +17,7 @@
       <link href="./css/custom-style.css" rel="stylesheet">
       <link rel="stylesheet" href="./css/progressbar.css" />
       <link rel="stylesheet" href="./css/toggleable-button.css" />
+      <link rel="stylesheet" href="./css/bootstrap-switch.css" />
    </head>
    <body>
       <nav class="navbar navbar-default navbar-fixed-top navbar-md">
@@ -149,20 +150,26 @@
                            <tr>
                               <td><p id="label1"></p></td>
                               <td>
-                                  <input class="toggleable-button"  id="mountToggle" name="MountToggle" type="checkbox" onClick="powerToggles.mountToggle()"/>
+                                  <input type="checkbox" id="firstToggle" name="firstToggle" checked class="toggle-switch">
                               </td>
                            </tr>
                            <tr>
                               <td><p id="label2"></p></td>
-                              <td><input class="toggleable-button" name="CameraToggle" type="checkbox"/></td>
+                              <td>
+                                  <input type="checkbox" id="secondToggle" name="secondToggle" checked class="toggle-switch">
+                              </td>
                            </tr>
                            <tr>
                               <td><p id="label3"></p></td>
-                              <td><input class="toggleable-button" name="CameraToggle" type="checkbox"/></td>
+                              <td>
+                                  <input type="checkbox" id="thirdToggle" name="thirdToggle" checked class="toggle-switch">
+                              </td>
                            </tr>
                            <tr>
                               <td><p id="label4"></p></td>
-                              <td><input class="toggleable-button" name="FansToggle" type="checkbox"/></td>
+                              <td>
+                                  <input type="checkbox" id="fourthToggle" name="fourthToggle" checked class="toggle-switch">
+                              </td>
                            </tr>
                         </tbody>
                      </table>
@@ -400,7 +407,8 @@
       <script type='text/javascript' src='js/tween.js'></script>
       <script type='text/javascript' src='js/steelseries-min.js'></script>
       <script type="text/javascript" src="js/progressbar.min.js"></script>
-      <script type="text/javascript" src="js/toggleable-button.js"></script>         
+      <script type="text/javascript" src="js/toggleable-button.js"></script>  
+      <script type="text/javascript" src="js/bootstrap-switch.js"></script>  
       <script type="text/javascript">
          app.initialize();
       </script>     

@@ -2,9 +2,9 @@
 /* global cordova, console, $, bluetoothSerial, _, refreshButton, deviceList, previewColor, red, green, blue, disconnectButton, connectionScreen, colorScreen, rgbText, messageDiv */
 'use strict';
 
-var flatBoxBar,dewHeater1Bar,dewHeater2Bar;
+var flatBoxBar, dewHeater1Bar, dewHeater2Bar;
 var temp, hum, dp, voltage, current, power;
-var temperatureLcd,humidityLcd,dewLcd,voltageLcd,currLcd,powLcd;
+var temperatureLcd, humidityLcd, dewLcd, voltageLcd, currLcd, powLcd;
 
 
 
@@ -23,6 +23,13 @@ var app = {
         lcdScreens.currentLcd();
         lcdScreens.powerLcd();
         BoxKite.ToggleableButton.init();
+
+        $(".toggle-switch").bootstrapSwitch();
+
+        $('.toggle-switch').on('switchChange.bootstrapSwitch', function(event, state) {
+            var id = $(this).attr('id');
+            powerToggles.mountToggle(id, state);
+        });
     },
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
@@ -46,10 +53,11 @@ var app = {
         refreshGeoButton.ontouchstart = geo.refreshGeo;
         heatersOff.ontouchstart = dewHeatersCtrl.dewHeatersOff;
         heatersFull.ontouchstart = dewHeatersCtrl.dewHeatersMax;
-        mountToggle.ontouchstart = powerToggles.mountToggle;
         navigator.geolocation.getCurrentPosition(geo.geoOnSuccess, geo.geoOnFail);
         saveLabels.ontouchstart = fileHandler.getLabelValueAndSave;
         fileHandler.getLabesOnStart();
+
+
     },
 
     timeoutId: 0,
@@ -86,11 +94,11 @@ var blueToothCtrl = {
         var listItem;
         deviceList.innerHTML = "";
         listItem = document.createElement('li');
-        listItem.className = "list-group-item";
-        listItem.innerHTML = "<font color='black'>Connected:</font>" + "<span class='badge'>" + device + "</span>" + "</i>";
+        listItem.className = "list-group-item devide-items";
+        listItem.innerHTML = "Connected to "+ device.name;
         deviceList.appendChild(listItem);
         blueToothCtrl.btStatus("Connected to " + device);
-        console.log("Connected to " + device);
+        console.log("Connected to " + device.name);
         setInterval(function() {
             getBtData();
         }, 5000);
@@ -111,7 +119,7 @@ var blueToothCtrl = {
 
         devices.forEach(function(device) {
             listItem = document.createElement('li');
-            listItem.className = "list-group-item";
+            listItem.className = "list-group-item devide-items";
             if (device.hasOwnProperty("uuid")) { // TODO https://github.com/don/BluetoothSerial/issues/5
                 deviceId = device.uuid;
             } else if (device.hasOwnProperty("address")) {
@@ -120,7 +128,7 @@ var blueToothCtrl = {
                 deviceId = "ERROR " + JSON.stringify(device);
             }
             listItem.setAttribute('deviceId', device.address);
-            listItem.innerHTML = "<font color='black'>" + device.name + "</font></br><i>" + "<span class='badge'>" + deviceId + "</span>" + "</i>";
+            listItem.innerHTML = device.name + " | " + deviceId;
             deviceList.appendChild(listItem);
         });
 
@@ -180,6 +188,26 @@ var blueToothCtrl = {
             console.log("Out2:" + outPuts[1]);
             console.log("Out3:" + outPuts[2]);
             console.log("Out4:" + outPuts[3]);
+            if (Number(outPuts[0]) === 1) {
+                $('#firstToggle').bootstrapSwitch('state', true);
+            } else {
+                $('#firstToggle').bootstrapSwitch('state', false);
+            }
+            if (Number(outPuts[1]) === 1) {
+                $('#secondToggle').bootstrapSwitch('state', true);
+            } else {
+                $('#secondToggle').bootstrapSwitch('state', false);
+            }
+            if (Number(outPuts[2]) === 1) {
+                $('#thirdToggle').bootstrapSwitch('state', true);
+            } else {
+                $('#thirdToggle').bootstrapSwitch('state', false);
+            }
+            if (Number(outPuts[3]) === 1) {
+                $('#fourthToggle').bootstrapSwitch('state', true);
+            } else {
+                $('#fourthToggle').bootstrapSwitch('state', true);
+            }
         }
     },
     btReadFail: function() {
@@ -406,13 +434,37 @@ var geo = {
 };
 
 var powerToggles = {
-    mountToggle: function() {
-        var checked = document.getElementById("mountToggle").checked;
-        if (checked === true) {
-            console.log("Mount is true");
-        } else {
-            console.log("Mount is false");
+    mountToggle: function(id, state) {
+        console.log(id + " is " + state);
+        var switchMode;
+        
+        if(state==true){
+            switchMode = "1";
         }
+        else{
+            switchMode="0";
+        }        
+        switch (id) {
+            case "firstToggle":
+                powerToggles.handleOutput("W",switchMode);
+                break;
+            case "secondToggle":
+                powerToggles.handleOutput("X",switchMode);
+                break;
+            case "thirdToggle":
+                powerToggles.handleOutput("Y",switchMode);
+                break;
+            case "fourthToggle":
+                powerToggles.handleOutput("Z",switchMode);
+                break;    
+            default:
+            powerToggles.handleOutput();
+        }
+    },
+    handleOutput: function(command,state){
+         var commandToSend = command+":"+state+"\n";
+         console.log(commandToSend);
+         blueToothCtrl.sendToPowerBox(commandToSend);
     }
 };
 
@@ -429,7 +481,7 @@ var screenBrightness = {
         console.log("Dim failed");
     },
     lcdOn: function() {
-        var VolumeControl = cordova.plugins.brightness;        
+        var VolumeControl = cordova.plugins.brightness;
         var checked = document.getElementById("screenOn").checked;
         if (checked === true) {
             VolumeControl.setKeepScreenOn(true);
