@@ -95,10 +95,10 @@ var blueToothCtrl = {
         deviceList.innerHTML = "";
         listItem = document.createElement('li');
         listItem.className = "list-group-item devide-items";
-        listItem.innerHTML = "Connected to "+ device.name;
+        listItem.innerHTML = "Connected to "+ device;
         deviceList.appendChild(listItem);
         blueToothCtrl.btStatus("Connected to " + device);
-        console.log("Connected to " + device.name);
+        console.log("Connected to " + device);
         setInterval(function() {
             getBtData();
         }, 5000);
@@ -107,8 +107,8 @@ var blueToothCtrl = {
         var listItem;
         deviceList.innerHTML = "";
         listItem = document.createElement('li');
-        listItem.className = "list-group-item";
-        listItem.innerHTML = "<font color='black'>Disconnected</font></i>";
+        listItem.className = "list-group-item devide-items";
+        listItem.innerHTML = "Disconnected";
         deviceList.appendChild(listItem);
         blueToothCtrl.btStatus("Disconnected");
     },
@@ -184,30 +184,30 @@ var blueToothCtrl = {
             setLcdValue(currLcd, current);
             setLcdValue(powLcd, power);
             var outPuts = sensors[7];
-            console.log("Out1:" + outPuts[0]);
-            console.log("Out2:" + outPuts[1]);
-            console.log("Out3:" + outPuts[2]);
-            console.log("Out4:" + outPuts[3]);
-            if (Number(outPuts[0]) === 1) {
-                $('#firstToggle').bootstrapSwitch('state', true);
-            } else {
-                $('#firstToggle').bootstrapSwitch('state', false);
-            }
-            if (Number(outPuts[1]) === 1) {
-                $('#secondToggle').bootstrapSwitch('state', true);
-            } else {
-                $('#secondToggle').bootstrapSwitch('state', false);
-            }
-            if (Number(outPuts[2]) === 1) {
-                $('#thirdToggle').bootstrapSwitch('state', true);
-            } else {
-                $('#thirdToggle').bootstrapSwitch('state', false);
-            }
-            if (Number(outPuts[3]) === 1) {
-                $('#fourthToggle').bootstrapSwitch('state', true);
-            } else {
-                $('#fourthToggle').bootstrapSwitch('state', true);
-            }
+//            console.log("Out1:" + outPuts[0]);
+//            console.log("Out2:" + outPuts[1]);
+//            console.log("Out3:" + outPuts[2]);
+//            console.log("Out4:" + outPuts[3]);
+//            if (outPuts[0] === "1") {
+//                $('#firstToggle').bootstrapSwitch('state', true,true);
+//            } else {
+//                $('#firstToggle').bootstrapSwitch('state', false,true);
+//            }
+//             if (outPuts[1] === "1") {
+//                $('#secondToggle').bootstrapSwitch('state', true,true);
+//            } else {
+//                $('#secondToggle').bootstrapSwitch('state', false,true);
+//            }
+//            if (outPuts[2] === "1") {
+//                $('#thirdToggle').bootstrapSwitch('state', true,true);
+//            } else {
+//                $('#thirdToggle').bootstrapSwitch('state', false,true);
+//            }
+//             if (outPuts[3] === "1") {
+//                $('#fourthToggle').bootstrapSwitch('state', true,true);
+//            } else {
+//                $('#fourthToggle').bootstrapSwitch('state', true,true);
+//            }
         }
     },
     btReadFail: function() {
@@ -321,19 +321,13 @@ var flatBoxCtrl = {
         });
     },
     onFlatBoxPwmChange: function(evt) {
-        var c = flatBoxCtrl.getColor();
-        var pwm = c / 2.55;
+        var flatBoxValue = flatBoxSlider.value;
+        var pwm = flatBoxValue / 2.55;
         var roundPwm = Math.round(pwm);
-        rgbText.innerText = 'Duty Cycle: ' + roundPwm + "%";
-        //charts.linearAddValue(pwm);
         flatBoxBar.setPercent(roundPwm);
-        blueToothCtrl.sendToPowerBox(c);
-    },
-    getColor: function() {
-        var color = [];
-        color.push(flatBoxSlider.value);
-        return color.join('');
-    },
+        rgbText.innerText = 'Duty Cycle: ' + roundPwm + "%";              
+        blueToothCtrl.sendToPowerBox("N:" + flatBoxValue + "\n");
+    }
 };
 
 var dewHeatersCtrl = {
@@ -570,7 +564,7 @@ function getWeather(latitude, longitude) {
                 if (results.weather.length) {
                     $('#weather_city_description').text("City: " + results.name);
                     $('#weather_temp').text("Temperature: " + results.main.temp + " °C");
-                    $('#weather_wind').text("Wind: " + results.wind.speed + "km/h");
+                    $('#weather_wind').text("Wind: " + results.wind.speed + " km/h");
                     $('#weather_humidity').text("Humidity: " + results.main.humidity + " %");
                     $('#weather_visibility').text("Visibility: " + results.weather[0].main);
                     $('#weather_pressure').text("Pressure: " + results.main.pressure + " mB");
