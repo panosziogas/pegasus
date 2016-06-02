@@ -176,6 +176,23 @@ body {
 		border:0px solid #C0C0C0;
 		padding:1px;
 	}
+        
+.btButtons {
+		border:0px solid #C0C0C0;
+		border-collapse:collapse;
+		padding:1px;  
+                position:relative;
+                width: 100%;
+	}
+	.btButtons th {
+		border:0px solid #C0C0C0;
+		padding:1px;
+		background:#F0F0F0;
+	}
+	.btButtons td {
+		border:0px solid #C0C0C0;
+		padding:1px;
+	}        
 
 /*  .list-group-item {
     position: relative;

@@ -5,15 +5,15 @@
 var flatBoxBar, dewHeater1Bar, dewHeater2Bar;
 var temp, hum, dp, voltage, current, power;
 var temperatureLcd, humidityLcd, dewLcd, voltageLcd, currLcd, powLcd;
+var outPut1, outPut2, outPut3, outPut4;
+var btState = 0;
+var intervalId;
 
 
 
 var app = {
     initialize: function() {
         this.bind();
-        //charts.sysout();        
-        // charts.test();
-        //charts.radialTemp();   
         flatBoxCtrl.initializeFlatBoxBar();
         dewHeatersCtrl.initializeDewHeatersBar();
         lcdScreens.tempLcd();
@@ -23,6 +23,8 @@ var app = {
         lcdScreens.currentLcd();
         lcdScreens.powerLcd();
         BoxKite.ToggleableButton.init();
+        appearance.hideElemenets();
+        $("#disconnectButton").hide();
 
         $(".toggle-switch").bootstrapSwitch();
 
@@ -33,7 +35,7 @@ var app = {
     },
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
-        // throttle changes
+
         var throttledOnColorChange = _.throttle(flatBoxCtrl.onFlatBoxPwmChange, 50);
         $('#flatBoxSlider').on('change', throttledOnColorChange);
 
@@ -45,10 +47,10 @@ var app = {
 
         var brightNessOnChange = _.throttle(screenBrightness.dimLcd, 50);
         $('#dimDisplaySlider').on('change', brightNessOnChange);
-        //$('#settings').on('click', app.list);          
+
     },
     deviceready: function() {
-        deviceList.ontouchstart = blueToothCtrl.connect; // assume not scrolling
+        deviceList.ontouchstart = blueToothCtrl.connect;
         refreshButton.ontouchstart = blueToothCtrl.list;
         refreshGeoButton.ontouchstart = geo.refreshGeo;
         heatersOff.ontouchstart = dewHeatersCtrl.dewHeatersOff;
@@ -56,10 +58,8 @@ var app = {
         navigator.geolocation.getCurrentPosition(geo.geoOnSuccess, geo.geoOnFail);
         saveLabels.ontouchstart = fileHandler.getLabelValueAndSave;
         fileHandler.getLabesOnStart();
-
-
+        disconnectButton.ontouchstart = blueToothCtrl.disconnect;
     },
-
     timeoutId: 0,
     setStatus: function(status) {
         if (app.timeoutId) {
@@ -83,9 +83,6 @@ var blueToothCtrl = {
         bluetoothSerial.connect(device, blueToothCtrl.onconnect(device), blueToothCtrl.ondisconnect);
     },
     disconnect: function(event) {
-        //        if (event) {
-        //            event.preventDefault();
-        //        }
         blueToothCtrl.btStatus("Disconnecting...");
         console.log(event);
         bluetoothSerial.disconnect(blueToothCtrl.ondisconnect, false);
@@ -95,13 +92,14 @@ var blueToothCtrl = {
         deviceList.innerHTML = "";
         listItem = document.createElement('li');
         listItem.className = "list-group-item devide-items";
-        listItem.innerHTML = "Connected to "+ device;
+        listItem.innerHTML = "Connected to " + device;
         deviceList.appendChild(listItem);
         blueToothCtrl.btStatus("Connected to " + device);
         console.log("Connected to " + device);
-        setInterval(function() {
+        $("#disconnectButton").show();
+        intervalId = setInterval(function() {
             getBtData();
-        }, 5000);
+        }, 3000);
     },
     ondisconnect: function() {
         var listItem;
@@ -111,7 +109,11 @@ var blueToothCtrl = {
         listItem.innerHTML = "Disconnected";
         deviceList.appendChild(listItem);
         blueToothCtrl.btStatus("Disconnected");
-        navigator.notification.alert("Bluetooth Disconnected!", blueToothCtrl.list, "Error", "ok");
+        btState = 0;
+        appearance.hideElemenets();
+        clearInterval(intervalId);
+        $("#disconnectButton").hide();
+        navigator.notification.alert("Bluetooth Disconnected!", blueToothCtrl.list, "Info", "ok");
     },
     ondevicelist: function(devices) {
         var listItem, deviceId;
@@ -121,7 +123,7 @@ var blueToothCtrl = {
         devices.forEach(function(device) {
             listItem = document.createElement('li');
             listItem.className = "list-group-item devide-items";
-            if (device.hasOwnProperty("uuid")) { // TODO https://github.com/don/BluetoothSerial/issues/5
+            if (device.hasOwnProperty("uuid")) {
                 deviceId = device.uuid;
             } else if (device.hasOwnProperty("address")) {
                 deviceId = device.address;
@@ -178,37 +180,23 @@ var blueToothCtrl = {
             hum = sensors[4];
             temp = sensors[5];
             dp = sensors[6];
+            var outPuts = sensors[7];
+            outPut1 = outPuts[0];
+            outPut2 = outPuts[1];
+            outPut3 = outPuts[2];
+            outPut4 = outPuts[3];
             setLcdValue(temperatureLcd, temp);
             setLcdValue(humidityLcd, hum);
             setLcdValue(dewLcd, dp);
             setLcdValue(voltageLcd, voltage);
             setLcdValue(currLcd, current);
             setLcdValue(powLcd, power);
-            var outPuts = sensors[7];
-//            console.log("Out1:" + outPuts[0]);
-//            console.log("Out2:" + outPuts[1]);
-//            console.log("Out3:" + outPuts[2]);
-//            console.log("Out4:" + outPuts[3]);
-//            if (outPuts[0] === "1") {
-//                $('#firstToggle').bootstrapSwitch('state', true,true);
-//            } else {
-//                $('#firstToggle').bootstrapSwitch('state', false,true);
-//            }
-//             if (outPuts[1] === "1") {
-//                $('#secondToggle').bootstrapSwitch('state', true,true);
-//            } else {
-//                $('#secondToggle').bootstrapSwitch('state', false,true);
-//            }
-//            if (outPuts[2] === "1") {
-//                $('#thirdToggle').bootstrapSwitch('state', true,true);
-//            } else {
-//                $('#thirdToggle').bootstrapSwitch('state', false,true);
-//            }
-//             if (outPuts[3] === "1") {
-//                $('#fourthToggle').bootstrapSwitch('state', true,true);
-//            } else {
-//                $('#fourthToggle').bootstrapSwitch('state', true,true);
-//            }
+            btState++;
+            console.log(btState);
+            if (btState == 1) {
+                console.log("Reveal Elements");
+                appearance.revealElements();
+            }
         }
     },
     btReadFail: function() {
@@ -326,9 +314,9 @@ var flatBoxCtrl = {
         var pwm = flatBoxValue / 2.55;
         var roundPwm = Math.round(pwm);
         flatBoxBar.setPercent(roundPwm);
-        rgbText.innerText = 'Duty Cycle: ' + roundPwm + "%";              
+        rgbText.innerText = 'Duty Cycle: ' + roundPwm + "%";
         blueToothCtrl.sendToPowerBox("N:" + flatBoxValue + "\n");
-         console.log("N:" + flatBoxValue + "\n");
+        console.log("N:" + flatBoxValue + "\n");
     }
 };
 
@@ -433,34 +421,33 @@ var powerToggles = {
     mountToggle: function(id, state) {
         console.log(id + " is " + state);
         var switchMode;
-        
-        if(state==true){
+
+        if (state == true) {
             switchMode = "1";
+        } else {
+            switchMode = "0";
         }
-        else{
-            switchMode="0";
-        }        
         switch (id) {
             case "firstToggle":
-                powerToggles.handleOutput("W",switchMode);
+                powerToggles.handleOutput("W", switchMode);
                 break;
             case "secondToggle":
-                powerToggles.handleOutput("X",switchMode);
+                powerToggles.handleOutput("X", switchMode);
                 break;
             case "thirdToggle":
-                powerToggles.handleOutput("Y",switchMode);
+                powerToggles.handleOutput("Y", switchMode);
                 break;
             case "fourthToggle":
-                powerToggles.handleOutput("Z",switchMode);
-                break;    
+                powerToggles.handleOutput("Z", switchMode);
+                break;
             default:
-            powerToggles.handleOutput();
+                powerToggles.handleOutput();
         }
     },
-    handleOutput: function(command,state){
-         var commandToSend = command+":"+state+"\n";
-         console.log(commandToSend);
-         blueToothCtrl.sendToPowerBox(commandToSend);
+    handleOutput: function(command, state) {
+        var commandToSend = command + ":" + state + "\n";
+        console.log(commandToSend);
+        blueToothCtrl.sendToPowerBox(commandToSend);
     }
 };
 
@@ -554,6 +541,49 @@ var fileHandler = {
         }, fileHandler.getFileSystemError());
     }
 };
+
+var appearance = {
+    hideElemenets: function() {
+        $("#connectionWait").show();
+        connectionWait.innerText = "Connect to device first..";
+        $("#powerToggles").hide();
+        $("#colorScreen").hide();
+        $("#dewHeaters").hide();
+        setLcdValue(temperatureLcd, 0);
+        setLcdValue(humidityLcd, 0);
+        setLcdValue(dewLcd, 0);
+        setLcdValue(voltageLcd, 0);
+        setLcdValue(currLcd, 0);
+        setLcdValue(powLcd, 0);
+    },
+    revealElements: function() {
+        $("#connectionWait").hide();
+        $("#powerToggles").show();
+        $("#colorScreen").show();
+        $("#dewHeaters").show();
+
+        if (outPut1 === "1") {
+            $('#firstToggle').bootstrapSwitch('state', true);
+        } else {
+            $('#firstToggle').bootstrapSwitch('state', false);
+        }
+        if (outPut2 === "1") {
+            $('#secondToggle').bootstrapSwitch('state', true);
+        } else {
+            $('#secondToggle').bootstrapSwitch('state', false);
+        }
+        if (outPut3 === "1") {
+            $('#thirdToggle').bootstrapSwitch('state', true);
+        } else {
+            $('#thirdToggle').bootstrapSwitch('state', false);
+        }
+        if (outPut4 === "1") {
+            $('#fourthToggle').bootstrapSwitch('state', true);
+        } else {
+            $('#fourthToggle').bootstrapSwitch('state', false);
+        }
+    }
+}
 
 function getWeather(latitude, longitude) {
     var OpenWeatherAppKey = "9d265e6d8e3b6619e15feba5537bbd69";

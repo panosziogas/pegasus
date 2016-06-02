@@ -23,16 +23,16 @@
       <nav class="navbar navbar-default navbar-fixed-top navbar-md">
          <div class="container">
             <div class="navbar-header">
-               <button type="button" class="navbar-toggle sidebar-toggle left-menu-bar-btn">
+<!--               <button type="button" class="navbar-toggle sidebar-toggle left-menu-bar-btn">
                   <span class="icon-bar">
                   </span> 
                   <span class="icon-bar">
                   </span> 
                   <span class="icon-bar">
-                     <!--</span> </button> <a href="allsearch.html" class="transition"> <button type="button" class="navbar-toggle search-btn-onclick"> 
-                        <span class="glyphicon glyphicon-search">-->
+                     </span> </button> <a href="allsearch.html" class="transition"> <button type="button" class="navbar-toggle search-btn-onclick"> 
+                        <span class="glyphicon glyphicon-search">
                   </span>
-               </button>
+               </button>-->
                </a>
                <span class="navbar-brand" href="#"><img src="img/saturn.png" class="img-responsive logo"/>
                </span> 
@@ -43,7 +43,7 @@
             </div>
          </div>
       </nav>
-      <div class="sidebar-overlay"></div>
+ <!--     <div class="sidebar-overlay"></div>
       <aside id="sidebar" class="sidebar sidebar-default sidebar-fixed-left" role="navigation">
          <div> <img src="img/Constellation.svg" class="img-responsive left-logo"/> </div>
          <ul class="nav sidebar-nav">
@@ -85,7 +85,7 @@
                </ul>
             </li>
          </ul>
-      </aside>
+      </aside>-->
       <div class="container">
          <div class="row" style="margin-top:15px; padding:5px;">
             <!-- Nav tabs -->
@@ -115,7 +115,7 @@
                         </span>
                      </a>
                   </li>
-                   <li role="presentation">
+                  <li role="presentation">
                      <a href="#digital_flatbox" aria-controls="flatbox_tab" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-fullscreen">
                            <!--<img src="img/geolocation.svg"/>-->
@@ -144,37 +144,48 @@
                      We are established in Athens, Greece and are confident we will not let you down.
                   </div>
                   <div role="tabpanel" class="tab-pane" id="export">
+                     <div id="connectionWait"></div>
+                     <div id="powerToggles">
                      <h4>12V DC Outputs:</h4>
                      <table class="togglesTable">
                         <tbody>
                            <tr>
-                              <td><p id="label1"></p></td>
                               <td>
-                                  <input type="checkbox" id="firstToggle" name="firstToggle" checked class="toggle-switch">
+                                 <p id="label1"></p>
+                              </td>
+                              <td>
+                                 <input type="checkbox" id="firstToggle" name="firstToggle" checked class="toggle-switch">
                               </td>
                            </tr>
                            <tr>
-                              <td><p id="label2"></p></td>
                               <td>
-                                  <input type="checkbox" id="secondToggle" name="secondToggle" checked class="toggle-switch">
+                                 <p id="label2"></p>
+                              </td>
+                              <td>
+                                 <input type="checkbox" id="secondToggle" name="secondToggle" checked class="toggle-switch">
                               </td>
                            </tr>
                            <tr>
-                              <td><p id="label3"></p></td>
                               <td>
-                                  <input type="checkbox" id="thirdToggle" name="thirdToggle" checked class="toggle-switch">
+                                 <p id="label3"></p>
+                              </td>
+                              <td>
+                                 <input type="checkbox" id="thirdToggle" name="thirdToggle" checked class="toggle-switch">
                               </td>
                            </tr>
                            <tr>
-                              <td><p id="label4"></p></td>
                               <td>
-                                  <input type="checkbox" id="fourthToggle" name="fourthToggle" checked class="toggle-switch">
+                                 <p id="label4"></p>
+                              </td>
+                              <td>
+                                 <input type="checkbox" id="fourthToggle" name="fourthToggle" checked class="toggle-switch">
                               </td>
                            </tr>
                         </tbody>
                      </table>
-                     <hr>
+                     </div>
                      <div id="colorScreen">
+                        <hr>
                         <h4>Flatbox:</h4>
                         <div class="rangeDiv">                    
                            <input type="range"  min="0" max="255" value="0" name="flatBoxSlider" id="flatBoxSlider" class="topcoat-range"/>
@@ -185,9 +196,9 @@
                            &nbsp;
                         </div>
                      </div>
-                     <br>
-                     <hr>
+                     <br>                     
                      <div id="dewHeaters">
+                        <hr>
                         <h4>Dewheaters:</h4>
                         <table class="heatersTable">
                            <tbody>
@@ -230,7 +241,7 @@
                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="geolocation_tab">
-                     <div id="geolocation">Finding geolocation...</div>                     
+                     <div id="geolocation">Finding geolocation...</div>
                      <div id="weather_city_description">&nbsp;</div>
                      <div id="weather_temp">&nbsp;</div>
                      <div id="weather_humidity">&nbsp;</div>
@@ -238,7 +249,7 @@
                      <div id="weather_wind">&nbsp;</div>
                      <div id="weather_visibility">&nbsp;</div>
                      <div id="weather_sunrise">&nbsp;</div>
-                     <div id="weather_sunset">&nbsp;</div>                   
+                     <div id="weather_sunset">&nbsp;</div>
                      <div id="map"></div>
                      <div style="margin: 10px">           
                         <button class="btn btn-primary btn-sm" id="refreshGeoButton">Refresh Location</button>
@@ -253,7 +264,7 @@
                               <td>Power(W)</td>
                            </tr>
                            <tr>
-                             <td>
+                              <td>
                                  <canvas id="canvasSingle4" width="150" height="50"></canvas>
                               </td>
                               <td>
@@ -282,49 +293,62 @@
                         <tbody>
                      </table>
                   </div>
-                   <div role="tabpanel" class="tab-pane" id="digital_flatbox">
-                        <div style="margin: 10px">           
+                  <div role="tabpanel" class="tab-pane" id="digital_flatbox">
+                     <div style="margin: 10px">           
                         <button class="btn btn-primary btn-sm" id="flatboxLoader" onclick="window.location.href='digitalFlatBox.html'">Load digital flatbox</button>
-                       </div>
-                   </div>
+                     </div>
+                  </div>
                   <div role="tabpanel" class="tab-pane" id="settings">
                      <div id="connectionScreen">
                         <h4>Paired bluetooth devices</h4>
                         <ul id="deviceList" class="list-group">                                             
                         </ul>
-                        <div style="margin: 10px">           
-                           <button class="btn btn-primary btn-sm" id="refreshButton">Refresh</button>
-                        </div>
                         <div id="btMessage"></div>
+                        <table class="btButtons">
+                           <tbody>
+                              <tr>
+                                 <td>
+                                    <div style="margin: 10px">           
+                                       <button class="btn btn-primary btn-sm" id="refreshButton">Refresh</button>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div style="margin: 10px">           
+                                       <button class="btn btn-primary btn-sm" id="disconnectButton">Disconnect</button>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>                        
                         <hr>
-                         <div class="rangeDiv">
-                            <h4>Screen Brightness</h4>
+                        <div class="rangeDiv">
+                           <h4>Screen Brightness</h4>
                            <input type="range"  min="0" max="1" value="1" step ="0.01" name="dimDisplaySlider" id="dimDisplaySlider" class="topcoat-range"/>
-                            <div class="checkbox">
-                                <label><input id="screenOn" type="checkbox" onClick="screenBrightness.lcdOn()">Keep Display ON</label>
-                            </div>
+                           <div class="checkbox">
+                              <label><input id="screenOn" type="checkbox" onClick="screenBrightness.lcdOn()">Keep Display ON</label>
+                           </div>
                         </div>
                         <hr>
-                         <h4>12V Output names</h4>
+                        <h4>12V Output names</h4>
                         <div class="form-group">
-                        <label for="usr">OutPut 1 Label:</label>
-                        <input type="text" class="form-control" id="output1">
+                           <label for="usr">Output 1 Label:</label>
+                           <input type="text" class="form-control" id="output1">
                         </div>
                         <div class="form-group">
-                         <label for="usr">OutPut 2 Label:</label>
-                        <input type="text" class="form-control" id="output2">
+                           <label for="usr">Output 2 Label:</label>
+                           <input type="text" class="form-control" id="output2">
                         </div>
                         <div class="form-group">
-                        <label for="usr">OutPut 3 Label:</label>
-                        <input type="text" class="form-control" id="output3">
+                           <label for="usr">Output 3 Label:</label>
+                           <input type="text" class="form-control" id="output3">
                         </div>
                         <div class="form-group">
-                         <label for="usr">OutPut 4 Label:</label>
-                        <input type="text" class="form-control" id="output4">
+                           <label for="usr">Output 4 Label:</label>
+                           <input type="text" class="form-control" id="output4">
                         </div>
                         <div style="margin: 10px">           
-                        <button class="btn btn-primary btn-sm" id="saveLabels">Save Labels</button>
-                       </div>
+                           <button class="btn btn-primary btn-sm" id="saveLabels">Save Labels</button>
+                        </div>
                      </div>
                   </div>
                </div>
