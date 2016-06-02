@@ -340,13 +340,13 @@ var charts = {
     temperatureChartInitialize : function(){
         $.plot($("#tempChart"), [temperatureChartData],{
         yaxis: { max: 40 ,min:-20 } ,
-        xaxis: { mode: "time" ,minTickSize: [10, "minute"]}
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
         });
     },
     humidityChartInitialize : function(){
         $.plot($("#humidityChart"), [humidityChartData],{
         yaxis: { max: 100, min:0 } ,
-        xaxis: { mode: "time" ,minTickSize: [10, "minute"]}
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
         });
     },
     dewPointChartInitialize : function(){
