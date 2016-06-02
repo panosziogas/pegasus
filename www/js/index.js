@@ -9,7 +9,12 @@ var outPut1, outPut2, outPut3, outPut4;
 var btState = 0;
 var intervalId;
 
-
+var temperatureChartData =[];
+var humidityChartData =[];
+var dewPointChartData =[];
+var voltageChartData =[];
+var currentChartData =[];
+var powerChartData =[];
 
 var app = {
     initialize: function() {
@@ -31,7 +36,15 @@ var app = {
         $('.toggle-switch').on('switchChange.bootstrapSwitch', function(event, state) {
             var id = $(this).attr('id');
             powerToggles.mountToggle(id, state);
-        });
+        });        
+        
+         charts.temperatureChartInitialize();      
+         charts.humidityChartInitialize();
+         charts.dewPointChartInitialize();
+         charts.voltageChartInitialize();
+         charts.currentChartInitialize();
+         charts.powerChartInitialize();
+       
     },
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
@@ -197,6 +210,26 @@ var blueToothCtrl = {
                 console.log("Reveal Elements");
                 appearance.revealElements();
             }
+            
+            var curDate = new Date().getTime();
+            
+            temperatureChartData.push([curDate, Number(temp)]);            
+            charts.temperatureChartInitialize();  
+            
+            humidityChartData.push([curDate, Number(hum)]);
+            charts.humidityChartInitialize();
+            
+            dewPointChartData.push([curDate, Number(dp)]);
+            charts.dewPointChartInitialize();
+            
+            voltageChartData.push([curDate, Number(voltage)]);
+            charts.voltageChartInitialize();
+            
+            currentChartData.push([curDate, Number(current)]);
+            charts.currentChartInitialize();
+            
+            powerChartData.push([curDate, Number(power)]);
+            charts.powerChartInitialize();  
         }
     },
     btReadFail: function() {
@@ -300,6 +333,47 @@ var lcdScreens = {
 
 function setLcdValue(gauge, range) {
     gauge.setValue(Number(range));
+}
+
+
+var charts = {
+    temperatureChartInitialize : function(){
+        $.plot($("#tempChart"), [temperatureChartData],{
+        yaxis: { max: 40 ,min:-20 } ,
+        xaxis: { mode: "time" ,minTickSize: [10, "minute"]}
+        });
+    },
+    humidityChartInitialize : function(){
+        $.plot($("#humidityChart"), [humidityChartData],{
+        yaxis: { max: 100, min:0 } ,
+        xaxis: { mode: "time" ,minTickSize: [10, "minute"]}
+        });
+    },
+    dewPointChartInitialize : function(){
+        $.plot($("#dewPointChart"), [dewPointChartData],{
+        yaxis: { max: 40 ,min:-20 } ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        });
+    },
+     voltageChartInitialize : function(){
+        $.plot($("#voltageChart"), [voltageChartData],{
+        yaxis: { max: 20 ,min:0 } ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        });
+    },
+    currentChartInitialize : function(){
+        $.plot($("#currentChart"), [currentChartData],{
+        yaxis: { max: 15 ,min:0 } ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        });
+    },
+    powerChartInitialize : function(){
+        $.plot($("#powerChart"), [powerChartData],{
+        yaxis: { max: 200 ,min:0 } ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        });
+    }
+    
 }
 
 var flatBoxCtrl = {
