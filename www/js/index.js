@@ -619,8 +619,11 @@ var fileHandler = {
 var appearance = {
     hideElemenets: function() {
         $("#connectionWait").show();
+        $("#connectionWait2").show();
         connectionWait.innerText = "Connect to device first..";
+        connectionWait2.innerText = "Connect to device first..";
         $("#powerToggles").hide();
+        $("#inputData").hide();
         $("#colorScreen").hide();
         $("#dewHeaters").hide();
         setLcdValue(temperatureLcd, 0);
@@ -632,7 +635,9 @@ var appearance = {
     },
     revealElements: function() {
         $("#connectionWait").hide();
+        $("#connectionWait2").hide();
         $("#powerToggles").show();
+        $("#inputData").show();
         $("#colorScreen").show();
         $("#dewHeaters").show();
 
