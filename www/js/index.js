@@ -9,13 +9,15 @@ var outPut1, outPut2, outPut3, outPut4;
 var btState = 0;
 var intervalId;
 
-var temperatureChartData =[];
-var humidityChartData =[];
-var dewPointChartData =[];
-var voltageChartData =[];
-var currentChartData =[];
-var powerChartData =[];
-var device;
+
+var temperatureChartData = [];
+var humidityChartData = [];
+var dewPointChartData = [];
+var voltageChartData = [];
+var currentChartData = [];
+var powerChartData = [];
+var device;  //mac address of the selected bt device from the list
+var btDevices = []; //array tha holds bt devices mac and and names for viewing on connection
 
 var app = {
     initialize: function() {
@@ -29,22 +31,22 @@ var app = {
         lcdScreens.currentLcd();
         lcdScreens.powerLcd();
         //BoxKite.ToggleableButton.init();
-        appearance.hideElemenets();        
+        appearance.hideElemenets();
 
         $(".toggle-switch").bootstrapSwitch();
 
         $('.toggle-switch').on('switchChange.bootstrapSwitch', function(event, state) {
             var id = $(this).attr('id');
             powerToggles.mountToggle(id, state);
-        });        
-        
-         charts.temperatureChartInitialize();      
-         charts.humidityChartInitialize();
-         charts.dewPointChartInitialize();
-         charts.voltageChartInitialize();
-         charts.currentChartInitialize();
-         charts.powerChartInitialize();
-       
+        });
+
+        charts.temperatureChartInitialize();
+        charts.humidityChartInitialize();
+        charts.dewPointChartInitialize();
+        charts.voltageChartInitialize();
+        charts.currentChartInitialize();
+        charts.powerChartInitialize();
+
     },
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
@@ -101,17 +103,22 @@ var blueToothCtrl = {
         bluetoothSerial.disconnect(blueToothCtrl.ondisconnect, false);
     },
     onconnect: function(device) {
+        var deviceToConnectName;   
+        for (var btMacAddress in btDevices) { //it transaltes the mac address to device name for viewing
+            if (btMacAddress === device) {
+                deviceToConnectName = btDevices[btMacAddress];
+            }
+        }
         var listItem;
         deviceList.innerHTML = "";
         listItem = document.createElement('li');
         listItem.className = "list-group-item devide-items";
-        listItem.innerHTML = "Connecting to " + device;
+        listItem.innerHTML = "Connecting to " + deviceToConnectName;
         deviceList.appendChild(listItem);
-        //blueToothCtrl.btStatus("Connecting to " + device);
-        console.log("Connecting to " + device);       
+        console.log("Connecting to " + deviceToConnectName);
         intervalId = setInterval(function() {
             getBtData();
-        }, 3000);
+        }, 1000);
     },
     ondisconnect: function() {
         var listItem;
@@ -119,9 +126,8 @@ var blueToothCtrl = {
         listItem = document.createElement('li');
         listItem.className = "list-group-item devide-items";
         listItem.innerHTML = "Disconnected";
-        deviceList.appendChild(listItem);
-        //blueToothCtrl.btStatus("Disconnected");
-        btState = 0;
+        deviceList.appendChild(listItem);      
+        btState = 0;  //it resets the bt state var, 
         appearance.hideElemenets();
         clearInterval(intervalId);
         $("#disconnectButton").hide();
@@ -143,10 +149,12 @@ var blueToothCtrl = {
             } else {
                 deviceId = "ERROR " + JSON.stringify(device);
             }
+            var deviceName = device.name;
             listItem.setAttribute('deviceId', device.address);
-            listItem.innerHTML = device.name + " | " + deviceId;
-            if(device.name.includes("powerbox")){
-            deviceList.appendChild(listItem);
+            listItem.innerHTML = deviceName + " | " + deviceId;
+            if (deviceName.includes("powerbox")) {
+                deviceList.appendChild(listItem);
+                btDevices[deviceId] = deviceName;
             }
         });
 
@@ -157,10 +165,10 @@ var blueToothCtrl = {
             } else { // Android               
                 blueToothCtrl.btStatus("Pair Intelli Powerbox");
             }
-            } 
-//        else {
-//            blueToothCtrl.btStatus("Found " + devices.length + " device" + (devices.length === 1 ? "." : "s."));
-//        }
+        }
+        //        else {
+        //            blueToothCtrl.btStatus("Found " + devices.length + " device" + (devices.length === 1 ? "." : "s."));
+        //        }
     },
     generateFailureFunction: function(message) {
         var func = function(reason) {
@@ -187,8 +195,8 @@ var blueToothCtrl = {
     },
     btReadSuccess: function(data) {
         console.log(data);
-        if (data) {         
-            
+        if (data) {
+
             var sensors = data.split(":");
             voltage = sensors[1];
             current = sensors[2];
@@ -209,36 +217,43 @@ var blueToothCtrl = {
             setLcdValue(powLcd, power);
             btState++;
             console.log(btState);
-            if (btState == 1) {
-                console.log("Reveal Elements");
+
+            if (btState == 1) {  //when btState var =1 the we have the first connection with the device
+                var deviceToConnectName;
+                for (var btMacAddress in btDevices) {
+                    if (btMacAddress === device) {
+                        deviceToConnectName = btDevices[btMacAddress];
+                    }
+                }
                 var listItem;
                 deviceList.innerHTML = "";
                 listItem = document.createElement('li');
                 listItem.className = "list-group-item devide-items";
-                listItem.innerHTML = "Succesfully connected to "+ device;
-                deviceList.appendChild(listItem);          
+                listItem.innerHTML = "Succesfully connected to " + deviceToConnectName;
+                deviceList.appendChild(listItem);
                 appearance.revealElements();
             }
-            
+
             var curDate = new Date().getTime();
-            
-            temperatureChartData.push([curDate, Number(temp)]);            
-            charts.temperatureChartInitialize();  
-            
+
+
+            temperatureChartData.push([curDate, Number(temp)]);
+            charts.temperatureChartInitialize();
+
             humidityChartData.push([curDate, Number(hum)]);
             charts.humidityChartInitialize();
-            
+
             dewPointChartData.push([curDate, Number(dp)]);
             charts.dewPointChartInitialize();
-            
+
             voltageChartData.push([curDate, Number(voltage)]);
             charts.voltageChartInitialize();
-            
+
             currentChartData.push([curDate, Number(current)]);
             charts.currentChartInitialize();
-            
+
             powerChartData.push([curDate, Number(power)]);
-            charts.powerChartInitialize();  
+            charts.powerChartInitialize();
         }
     },
     btReadFail: function() {
@@ -246,7 +261,7 @@ var blueToothCtrl = {
     }
 };
 
-function getBtData() {    
+function getBtData() {
     blueToothCtrl.sendToPowerBox("A\n");
     bluetoothSerial.read(blueToothCtrl.btReadSuccess, blueToothCtrl.btReadFail);
 }
@@ -346,85 +361,139 @@ function setLcdValue(gauge, range) {
 
 
 var charts = {
-    temperatureChartInitialize : function(){
-        $.plot($("#tempChart"), [{label: "Temperature °C", color: "#337bb6", data: temperatureChartData}],{           
-        yaxis: {tickDecimals:1} ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
-        lines: {
-        fill: false,
-        lineWidth: 2        
-        },
-        legend: {
-        position:  "sw"
-        }        
+    temperatureChartInitialize: function() {
+        $.plot($("#tempChart"), [{
+            label: "Temperature °C",
+            color: "#337bb6",
+            data: temperatureChartData
+        }], {
+            yaxis: {
+                tickDecimals: 1
+            },
+            xaxis: {
+                mode: "time",
+                minTickSize: [5, "minute"]
+            },
+            lines: {
+                fill: false,
+                lineWidth: 2
+            },
+            legend: {
+                position: "sw"
+            }
         });
     },
-    humidityChartInitialize : function(){
-        $.plot($("#humidityChart"), [{label: "Humidity %", color: "#337bb6", data: humidityChartData}],{
-        yaxis: {tickDecimals:0} ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
-        lines: {
-        fill: false,
-        lineWidth: 2        
-        },
-        legend: {
-        position:  "sw"
-        }         
+    humidityChartInitialize: function() {
+        $.plot($("#humidityChart"), [{
+            label: "Humidity %",
+            color: "#337bb6",
+            data: humidityChartData
+        }], {
+            yaxis: {
+                tickDecimals: 0
+            },
+            xaxis: {
+                mode: "time",
+                minTickSize: [5, "minute"]
+            },
+            lines: {
+                fill: false,
+                lineWidth: 2
+            },
+            legend: {
+                position: "sw"
+            }
         });
     },
-    dewPointChartInitialize : function(){
-        $.plot($("#dewPointChart"), [{label: "Dew Point °C", color: "#337bb6", data: dewPointChartData}],{
-         yaxis: {tickDecimals:1} ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
-        lines: {
-        fill: false,
-        lineWidth: 2        
-        },
-        legend: {
-        position:  "sw"
-        }      
+    dewPointChartInitialize: function() {
+        $.plot($("#dewPointChart"), [{
+            label: "Dew Point °C",
+            color: "#337bb6",
+            data: dewPointChartData
+        }], {
+            yaxis: {
+                tickDecimals: 1
+            },
+            xaxis: {
+                mode: "time",
+                minTickSize: [5, "minute"]
+            },
+            lines: {
+                fill: false,
+                lineWidth: 2
+            },
+            legend: {
+                position: "sw"
+            }
         });
     },
-     voltageChartInitialize : function(){
-        $.plot($("#voltageChart"), [{label: "Voltage(V)", color: "#337bb6", data: voltageChartData}],{
-        yaxis: {tickDecimals:1} ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
-        lines: {
-        fill: false,
-        lineWidth: 2        
-        },
-        legend: {
-        position:  "sw"
-        }      
+    voltageChartInitialize: function() {
+        $.plot($("#voltageChart"), [{
+            label: "Voltage(V)",
+            color: "#337bb6",
+            data: voltageChartData
+        }], {
+            yaxis: {
+                tickDecimals: 1
+            },
+            xaxis: {
+                mode: "time",
+                minTickSize: [5, "minute"]
+            },
+            lines: {
+                fill: false,
+                lineWidth: 2
+            },
+            legend: {
+                position: "sw"
+            }
         });
     },
-    currentChartInitialize : function(){
-        $.plot($("#currentChart"), [{label: "Current(A)", color: "#337bb6", data: currentChartData}],{
-        yaxis: {tickDecimals:1} ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
-        lines: {
-        fill: false,
-        lineWidth: 2        
-        },
-        legend: {
-        position:  "sw"
-        }      
+    currentChartInitialize: function() {
+        $.plot($("#currentChart"), [{
+            label: "Current(A)",
+            color: "#337bb6",
+            data: currentChartData
+        }], {
+            yaxis: {
+                tickDecimals: 1
+            },
+            xaxis: {
+                mode: "time",
+                minTickSize: [5, "minute"]
+            },
+            lines: {
+                fill: false,
+                lineWidth: 2
+            },
+            legend: {
+                position: "sw"
+            }
         });
     },
-    powerChartInitialize : function(){
-        $.plot($("#powerChart"), [{label: "Power(W)", color: "#337bb6", data: powerChartData}],{
-        yaxis: {tickDecimals:1} ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
-        lines: {
-        fill: false,
-        lineWidth: 2        
-        },
-        legend: {
-        position:  "sw"
-        }      
+    powerChartInitialize: function() {
+        $.plot($("#powerChart"), [{
+            label: "Power(W)",
+            color: "#337bb6",
+            data: powerChartData
+        }], {
+            yaxis: {
+                tickDecimals: 1
+            },
+            xaxis: {
+                mode: "time",
+                minTickSize: [5, "minute"]
+            },
+            lines: {
+                fill: false,
+                lineWidth: 2
+            },
+            legend: {
+                position: "sw"
+            }
         });
     }
-    
+
 }
 
 var flatBoxCtrl = {
@@ -547,7 +616,7 @@ var powerToggles = {
         console.log(id + " is " + state);
         var switchMode;
 
-        if (state == true) {
+        if (state === true) {
             switchMode = "1";
         } else {
             switchMode = "0";
