@@ -28,8 +28,7 @@ var app = {
         lcdScreens.currentLcd();
         lcdScreens.powerLcd();
         BoxKite.ToggleableButton.init();
-        appearance.hideElemenets();
-        $("#disconnectButton").hide();
+        appearance.hideElemenets();        
 
         $(".toggle-switch").bootstrapSwitch();
 
@@ -87,16 +86,16 @@ var app = {
 
 var blueToothCtrl = {
     list: function(event) {
-        blueToothCtrl.btStatus("Looking for Bluetooth Devices...");
+        //blueToothCtrl.btStatus("Looking for Bluetooth Devices...");
         bluetoothSerial.list(blueToothCtrl.ondevicelist, blueToothCtrl.generateFailureFunction("List Failed"));
     },
     connect: function(e) {
         var device = e.target.getAttribute('deviceId');
-        blueToothCtrl.btStatus("Requesting connection to " + device);
+        //blueToothCtrl.btStatus("Requesting connection to " + device);
         bluetoothSerial.connect(device, blueToothCtrl.onconnect(device), blueToothCtrl.ondisconnect);
     },
     disconnect: function(event) {
-        blueToothCtrl.btStatus("Disconnecting...");
+        //("Disconnecting...");
         console.log(event);
         bluetoothSerial.disconnect(blueToothCtrl.ondisconnect, false);
     },
@@ -105,11 +104,10 @@ var blueToothCtrl = {
         deviceList.innerHTML = "";
         listItem = document.createElement('li');
         listItem.className = "list-group-item devide-items";
-        listItem.innerHTML = "Connected to " + device;
+        listItem.innerHTML = "Connecting to " + device;
         deviceList.appendChild(listItem);
-        blueToothCtrl.btStatus("Connected to " + device);
-        console.log("Connected to " + device);
-        $("#disconnectButton").show();
+        //blueToothCtrl.btStatus("Connecting to " + device);
+        console.log("Connecting to " + device);       
         intervalId = setInterval(function() {
             getBtData();
         }, 3000);
@@ -121,17 +119,18 @@ var blueToothCtrl = {
         listItem.className = "list-group-item devide-items";
         listItem.innerHTML = "Disconnected";
         deviceList.appendChild(listItem);
-        blueToothCtrl.btStatus("Disconnected");
+        //blueToothCtrl.btStatus("Disconnected");
         btState = 0;
         appearance.hideElemenets();
         clearInterval(intervalId);
         $("#disconnectButton").hide();
-        navigator.notification.alert("Bluetooth Disconnected!", blueToothCtrl.list, "Info", "ok");
+        navigator.vibrate([500, 200, 500, 200, 500]);
+        navigator.notification.alert("Bluetooth connection failure!", blueToothCtrl.list, "Info", "ok");
     },
     ondevicelist: function(devices) {
         var listItem, deviceId;
         deviceList.innerHTML = "";
-        blueToothCtrl.btStatus("");
+        //blueToothCtrl.btStatus("");
 
         devices.forEach(function(device) {
             listItem = document.createElement('li');
@@ -145,7 +144,9 @@ var blueToothCtrl = {
             }
             listItem.setAttribute('deviceId', device.address);
             listItem.innerHTML = device.name + " | " + deviceId;
+            if(device.name.includes("powerbox")){
             deviceList.appendChild(listItem);
+            }
         });
 
         if (devices.length === 0) {
@@ -153,12 +154,12 @@ var blueToothCtrl = {
             if (cordova.platformId === "ios") { // BLE                
                 blueToothCtrl.btStatus("No Bluetooth Peripherals Discovered.");
             } else { // Android               
-                blueToothCtrl.btStatus("Please Pair a Bluetooth Device.");
+                blueToothCtrl.btStatus("Pair Intelli Powerbox");
             }
-
-        } else {
-            blueToothCtrl.btStatus("Found " + devices.length + " device" + (devices.length === 1 ? "." : "s."));
-        }
+            } 
+//        else {
+//            blueToothCtrl.btStatus("Found " + devices.length + " device" + (devices.length === 1 ? "." : "s."));
+//        }
     },
     generateFailureFunction: function(message) {
         var func = function(reason) {
@@ -185,7 +186,8 @@ var blueToothCtrl = {
     },
     btReadSuccess: function(data) {
         console.log(data);
-        if (data) {
+        if (data) {         
+            
             var sensors = data.split(":");
             voltage = sensors[1];
             current = sensors[2];
@@ -208,6 +210,12 @@ var blueToothCtrl = {
             console.log(btState);
             if (btState == 1) {
                 console.log("Reveal Elements");
+                var listItem;
+                deviceList.innerHTML = "";
+                listItem = document.createElement('li');
+                listItem.className = "list-group-item devide-items";
+                listItem.innerHTML = "Succesfully connected";
+                deviceList.appendChild(listItem);          
                 appearance.revealElements();
             }
             
@@ -237,7 +245,7 @@ var blueToothCtrl = {
     }
 };
 
-function getBtData() {
+function getBtData() {    
     blueToothCtrl.sendToPowerBox("A\n");
     bluetoothSerial.read(blueToothCtrl.btReadSuccess, blueToothCtrl.btReadFail);
 }
@@ -357,13 +365,13 @@ var charts = {
     },
      voltageChartInitialize : function(){
         $.plot($("#voltageChart"), [voltageChartData],{
-        yaxis: { max: 20 ,min:0 } ,
+        yaxis: { max: 15 ,min:0 } ,
         xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
         });
     },
     currentChartInitialize : function(){
         $.plot($("#currentChart"), [currentChartData],{
-        yaxis: { max: 15 ,min:0 } ,
+        yaxis: { max: 30 ,min:0 } ,
         xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
         });
     },
@@ -618,6 +626,7 @@ var fileHandler = {
 
 var appearance = {
     hideElemenets: function() {
+        $("#disconnectButton").hide();
         $("#connectionWait").show();
         $("#connectionWait2").show();
         connectionWait.innerText = "Connect to device first..";
@@ -634,6 +643,7 @@ var appearance = {
         setLcdValue(powLcd, 0);
     },
     revealElements: function() {
+        $("#disconnectButton").show();
         $("#connectionWait").hide();
         $("#connectionWait2").hide();
         $("#powerToggles").show();
