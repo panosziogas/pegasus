@@ -27,7 +27,7 @@ var app = {
         lcdScreens.voltLcd();
         lcdScreens.currentLcd();
         lcdScreens.powerLcd();
-        BoxKite.ToggleableButton.init();
+        //BoxKite.ToggleableButton.init();
         appearance.hideElemenets();        
 
         $(".toggle-switch").bootstrapSwitch();
@@ -346,39 +346,81 @@ function setLcdValue(gauge, range) {
 
 var charts = {
     temperatureChartInitialize : function(){
-        $.plot($("#tempChart"), [temperatureChartData],{
-        yaxis: { max: 40 ,min:-20 } ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        $.plot($("#tempChart"), [{label: "Temperature °C", color: "#ff0000", data: temperatureChartData}],{           
+        yaxis: {tickDecimals:1} ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
+        lines: {
+        fill: false,
+        lineWidth: 2        
+        },
+        legend: {
+        position:  "sw"
+        }        
         });
     },
     humidityChartInitialize : function(){
-        $.plot($("#humidityChart"), [humidityChartData],{
-        yaxis: { max: 100, min:0 } ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        $.plot($("#humidityChart"), [{label: "Humidity %", color: "#337bb6", data: humidityChartData}],{
+        yaxis: {tickDecimals:0} ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
+        lines: {
+        fill: true,
+        lineWidth: 2        
+        },
+        legend: {
+        position:  "sw"
+        }         
         });
     },
     dewPointChartInitialize : function(){
-        $.plot($("#dewPointChart"), [dewPointChartData],{
-        yaxis: { max: 40 ,min:-20 } ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        $.plot($("#dewPointChart"), [{label: "Dew Point °C", color: "#00ff00", data: dewPointChartData}],{
+         yaxis: {tickDecimals:1} ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
+        lines: {
+        fill: false,
+        lineWidth: 2        
+        },
+        legend: {
+        position:  "sw"
+        }      
         });
     },
      voltageChartInitialize : function(){
-        $.plot($("#voltageChart"), [voltageChartData],{
-        yaxis: { max: 15 ,min:0 } ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        $.plot($("#voltageChart"), [{label: "Voltage(V)", color: "#ffff00", data: voltageChartData}],{
+        yaxis: {tickDecimals:1} ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
+        lines: {
+        fill: false,
+        lineWidth: 2        
+        },
+        legend: {
+        position:  "sw"
+        }      
         });
     },
     currentChartInitialize : function(){
-        $.plot($("#currentChart"), [currentChartData],{
-        yaxis: { max: 30 ,min:0 } ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        $.plot($("#currentChart"), [{label: "Current(A)", color: "#ff3333", data: currentChartData}],{
+        yaxis: {tickDecimals:1} ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
+        lines: {
+        fill: false,
+        lineWidth: 2        
+        },
+        legend: {
+        position:  "sw"
+        }      
         });
     },
     powerChartInitialize : function(){
-        $.plot($("#powerChart"), [powerChartData],{
-        yaxis: { max: 200 ,min:0 } ,
-        xaxis: { mode: "time" ,minTickSize: [5, "minute"]}
+        $.plot($("#powerChart"), [{label: "Power(W)", color: "#ff6600", data: powerChartData}],{
+        yaxis: {tickDecimals:1} ,
+        xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
+        lines: {
+        fill: false,
+        lineWidth: 2        
+        },
+        legend: {
+        position:  "sw"
+        }      
         });
     }
     
@@ -629,8 +671,8 @@ var appearance = {
         $("#disconnectButton").hide();
         $("#connectionWait").show();
         $("#connectionWait2").show();
-        connectionWait.innerText = "Connect to device first..";
-        connectionWait2.innerText = "Connect to device first..";
+        connectionWait.innerText = "Connect to Intelli Powerbox first..";
+        connectionWait2.innerText = "Connect to Intelli Powerbox first..";
         $("#powerToggles").hide();
         $("#inputData").hide();
         $("#colorScreen").hide();
