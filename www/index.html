@@ -241,6 +241,8 @@
                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="geolocation_tab">
+                     <h4>GPS Location & Current Weather</h4>
+                     <hr>
                      <div id="geolocation">Finding geolocation...</div>
                      <div id="weather_city_description">&nbsp;</div>
                      <div id="weather_temp">&nbsp;</div>
@@ -258,10 +260,12 @@
                   <div role="tabpanel" class="tab-pane" id="input">
                     <div id="connectionWait2"></div>
                     <div id="inputData">
+                     <h4>Sensor Metrics:</h4>
+                      <hr>
                      <table class="lcdsTable">
                         <tbody>
                            <tr>
-                              <td>Voltage(V)</td>
+                               <td>Voltage(V)</td>
                               <td>Current(A)</td>
                               <td>Power(W)</td>
                            </tr>
@@ -293,7 +297,9 @@
                               </td>
                            </tr>
                         <tbody>
-                     </table>
+                     </table>   
+                      <hr>
+                      <h4>Charts:</h4>
                       <hr>
                      <ul class="nav nav-tabs">
                         <li role="presentation"><a href="#tempTab" aria-controls="export" role="tab" data-toggle="tab">Temp</span></a></li>
@@ -306,39 +312,41 @@
                      <div class="tab-content">
                         <div id="tempTab" class="tab-pane fade">
 <!--                           <h3>Temperature °C</h3>-->
-                          <div id="tempChart" style="width:300px;height:300px"></div>
+                          <div id="tempChart" style="width:100%;height:300px"></div>
                         </div>
                         <div id="humidityTab" class="tab-pane fade">
 <!--                           <h3>Humidity %</h3>-->
-                           <div id="humidityChart" style="width:300px;height:300px"></div>
+                           <div id="humidityChart" style="width:100%;height:300px"></div>
                         </div>
                         <div id="dewPointTab" class="tab-pane fade">
 <!--                           <h3>	Dew Point °C</h3>       -->
-                            <div id="dewPointChart" style="width:300px;height:300px"></div>
+                            <div id="dewPointChart" style="width:100%;height:300px"></div>
                         </div>
                         <div id="voltageTab" class="tab-pane fade">
 <!--                           <h3>Voltage(V)</h3>  -->
-                            <div id="voltageChart" style="width:300px;height:300px"></div>
+                            <div id="voltageChart" style="width:100%;height:300px"></div>
                         </div>
                          <div id="currentTab" class="tab-pane fade">
 <!--                           <h3>Current(A)</h3>         -->
-                           <div id="currentChart" style="width:300px;height:300px"></div>
+                           <div id="currentChart" style="width:100%;height:300px"></div>
                         </div>
                         <div id="powerTab" class="tab-pane fade">
 <!--                           <h3>Power(W)</h3>                -->
-                           <div id="powerChart" style="width:300px;height:300px"></div>
+                           <div id="powerChart" style="width:100%;height:300px"></div>
                         </div>
                      </div>
                      </div>                                     
                   </div>
                   <div role="tabpanel" class="tab-pane" id="digital_flatbox">
-                     <div style="margin: 10px">           
-                        <button class="btn btn-primary btn-sm" id="flatboxLoader" onclick="window.location.href='digitalFlatBox.html'">Load digital flatbox</button>
+                     <div style="margin: 10px">                                  
+                         <p>Use your mobile device as a flatbox surface.</p>
+                         <p>Dim the brightness of your screen  to capture the required ADU for your flat calibration files.</p>
+                         <button class="btn btn-primary btn-sm" id="flatboxLoader" onclick="window.location.href='digitalFlatBox.html'">Launch FlatBlet</button>
                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="settings">
                      <div id="connectionScreen">
-                        <h4>Paired Intelli Powerboxes</h4>
+                        <h4>Paired Devices</h4>
                         <ul id="deviceList" class="list-group">                                             
                         </ul>
                         <div id="btMessage"></div>
@@ -367,25 +375,25 @@
                            </div>
                         </div>
                         <hr>
-                        <h4>12V Output names</h4>
+                        <h4>12V Output Names</h4>
                         <div class="form-group">
-                           <label for="usr">Output 1 Label:</label>
+                           <label for="usr">Output 1:</label>
                            <input type="text" class="form-control" id="output1">
                         </div>
                         <div class="form-group">
-                           <label for="usr">Output 2 Label:</label>
+                           <label for="usr">Output 2:</label>
                            <input type="text" class="form-control" id="output2">
                         </div>
                         <div class="form-group">
-                           <label for="usr">Output 3 Label:</label>
+                           <label for="usr">Output 3:</label>
                            <input type="text" class="form-control" id="output3">
                         </div>
                         <div class="form-group">
-                           <label for="usr">Output 4 Label:</label>
+                           <label for="usr">Output 4:</label>
                            <input type="text" class="form-control" id="output4">
                         </div>
                         <div style="margin: 10px">           
-                           <button class="btn btn-primary btn-sm" id="saveLabels">Save Labels</button>
+                           <button class="btn btn-primary btn-sm" id="saveLabels">Save</button>
                         </div>
                      </div>
                   </div>

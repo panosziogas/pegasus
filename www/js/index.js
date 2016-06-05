@@ -15,6 +15,7 @@ var dewPointChartData =[];
 var voltageChartData =[];
 var currentChartData =[];
 var powerChartData =[];
+var device;
 
 var app = {
     initialize: function() {
@@ -90,7 +91,7 @@ var blueToothCtrl = {
         bluetoothSerial.list(blueToothCtrl.ondevicelist, blueToothCtrl.generateFailureFunction("List Failed"));
     },
     connect: function(e) {
-        var device = e.target.getAttribute('deviceId');
+        device = e.target.getAttribute('deviceId');
         //blueToothCtrl.btStatus("Requesting connection to " + device);
         bluetoothSerial.connect(device, blueToothCtrl.onconnect(device), blueToothCtrl.ondisconnect);
     },
@@ -125,7 +126,7 @@ var blueToothCtrl = {
         clearInterval(intervalId);
         $("#disconnectButton").hide();
         navigator.vibrate([500, 200, 500, 200, 500]);
-        navigator.notification.alert("Bluetooth connection failure!", blueToothCtrl.list, "Info", "ok");
+        navigator.notification.alert("Disconnected from bluetooth device", blueToothCtrl.list, "Info", "ok");
     },
     ondevicelist: function(devices) {
         var listItem, deviceId;
@@ -214,7 +215,7 @@ var blueToothCtrl = {
                 deviceList.innerHTML = "";
                 listItem = document.createElement('li');
                 listItem.className = "list-group-item devide-items";
-                listItem.innerHTML = "Succesfully connected";
+                listItem.innerHTML = "Succesfully connected to "+ device;
                 deviceList.appendChild(listItem);          
                 appearance.revealElements();
             }
@@ -346,7 +347,7 @@ function setLcdValue(gauge, range) {
 
 var charts = {
     temperatureChartInitialize : function(){
-        $.plot($("#tempChart"), [{label: "Temperature °C", color: "#ff0000", data: temperatureChartData}],{           
+        $.plot($("#tempChart"), [{label: "Temperature °C", color: "#337bb6", data: temperatureChartData}],{           
         yaxis: {tickDecimals:1} ,
         xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
         lines: {
@@ -363,7 +364,7 @@ var charts = {
         yaxis: {tickDecimals:0} ,
         xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
         lines: {
-        fill: true,
+        fill: false,
         lineWidth: 2        
         },
         legend: {
@@ -372,7 +373,7 @@ var charts = {
         });
     },
     dewPointChartInitialize : function(){
-        $.plot($("#dewPointChart"), [{label: "Dew Point °C", color: "#00ff00", data: dewPointChartData}],{
+        $.plot($("#dewPointChart"), [{label: "Dew Point °C", color: "#337bb6", data: dewPointChartData}],{
          yaxis: {tickDecimals:1} ,
         xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
         lines: {
@@ -385,7 +386,7 @@ var charts = {
         });
     },
      voltageChartInitialize : function(){
-        $.plot($("#voltageChart"), [{label: "Voltage(V)", color: "#ffff00", data: voltageChartData}],{
+        $.plot($("#voltageChart"), [{label: "Voltage(V)", color: "#337bb6", data: voltageChartData}],{
         yaxis: {tickDecimals:1} ,
         xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
         lines: {
@@ -398,7 +399,7 @@ var charts = {
         });
     },
     currentChartInitialize : function(){
-        $.plot($("#currentChart"), [{label: "Current(A)", color: "#ff3333", data: currentChartData}],{
+        $.plot($("#currentChart"), [{label: "Current(A)", color: "#337bb6", data: currentChartData}],{
         yaxis: {tickDecimals:1} ,
         xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
         lines: {
@@ -411,7 +412,7 @@ var charts = {
         });
     },
     powerChartInitialize : function(){
-        $.plot($("#powerChart"), [{label: "Power(W)", color: "#ff6600", data: powerChartData}],{
+        $.plot($("#powerChart"), [{label: "Power(W)", color: "#337bb6", data: powerChartData}],{
         yaxis: {tickDecimals:1} ,
         xaxis: { mode: "time" ,minTickSize: [5, "minute"]},
         lines: {
@@ -671,8 +672,8 @@ var appearance = {
         $("#disconnectButton").hide();
         $("#connectionWait").show();
         $("#connectionWait2").show();
-        connectionWait.innerText = "Connect to Intelli Powerbox first..";
-        connectionWait2.innerText = "Connect to Intelli Powerbox first..";
+        connectionWait.innerText = "Connect device first..";
+        connectionWait2.innerText = "Connect device first..";
         $("#powerToggles").hide();
         $("#inputData").hide();
         $("#colorScreen").hide();
