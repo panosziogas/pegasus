@@ -16,7 +16,7 @@ var dewPointChartData = [];
 var voltageChartData = [];
 var currentChartData = [];
 var powerChartData = [];
-var device;  //mac address of the selected bt device from the list
+var device; //mac address of the selected bt device from the list
 var btDevices = []; //array tha holds bt devices mac and and names for viewing on connection
 
 var app = {
@@ -103,7 +103,7 @@ var blueToothCtrl = {
         bluetoothSerial.disconnect(blueToothCtrl.ondisconnect, false);
     },
     onconnect: function(device) {
-        var deviceToConnectName;   
+        var deviceToConnectName;
         for (var btMacAddress in btDevices) { //it transaltes the mac address to device name for viewing
             if (btMacAddress === device) {
                 deviceToConnectName = btDevices[btMacAddress];
@@ -126,8 +126,8 @@ var blueToothCtrl = {
         listItem = document.createElement('li');
         listItem.className = "list-group-item devide-items";
         listItem.innerHTML = "Disconnected";
-        deviceList.appendChild(listItem);      
-        btState = 0;  //it resets the bt state var, 
+        deviceList.appendChild(listItem);
+        btState = 0; //it resets the bt state var, 
         appearance.hideElemenets();
         clearInterval(intervalId);
         $("#disconnectButton").hide();
@@ -218,7 +218,7 @@ var blueToothCtrl = {
             btState++;
             console.log(btState);
 
-            if (btState == 1) {  //when btState var =1 the we have the first connection with the device
+            if (btState == 1) { //when btState var =1 the we have the first connection with the device
                 var deviceToConnectName;
                 for (var btMacAddress in btDevices) {
                     if (btMacAddress === device) {
@@ -235,24 +235,48 @@ var blueToothCtrl = {
             }
 
             var curDate = new Date().getTime();
+            var dataMaxSize = 60;
 
-
-            temperatureChartData.push([curDate, Number(temp)]);
+            if (temperatureChartData.length < dataMaxSize) {
+                temperatureChartData.push([curDate, Number(temp)]);
+            } else {
+                temperatureChartData.shift();
+            }
             charts.temperatureChartInitialize();
-
-            humidityChartData.push([curDate, Number(hum)]);
+            /////////////////////////////////////////////
+            if (humidityChartData.length < dataMaxSize) {
+                humidityChartData.push([curDate, Number(hum)]);
+            } else {
+                humidityChartData.shift();
+            }
             charts.humidityChartInitialize();
-
-            dewPointChartData.push([curDate, Number(dp)]);
+            //////////////////////////////////////////////
+            if (dewPointChartData.length < dataMaxSize) {
+                dewPointChartData.push([curDate, Number(dp)]);
+            } else {
+                dewPointChartData.shift();
+            }
             charts.dewPointChartInitialize();
-
-            voltageChartData.push([curDate, Number(voltage)]);
+            //////////////////////////////////////////////
+            if (voltageChartData.length < dataMaxSize) {
+                voltageChartData.push([curDate, Number(voltage)]);
+            } else {
+                voltageChartData.shift();
+            }
             charts.voltageChartInitialize();
-
-            currentChartData.push([curDate, Number(current)]);
+            //////////////////////////////////////////////
+            if (currentChartData.length < dataMaxSize) {
+                currentChartData.push([curDate, Number(current)]);
+            } else {
+                currentChartData.shift();
+            }
             charts.currentChartInitialize();
-
-            powerChartData.push([curDate, Number(power)]);
+            //////////////////////////////////////////////
+            if (powerChartData < dataMaxSize) {
+                powerChartData.push([curDate, Number(power)]);
+            } else {
+                powerChartData.shift();
+            }
             charts.powerChartInitialize();
         }
     },
@@ -372,7 +396,19 @@ var charts = {
             },
             xaxis: {
                 mode: "time",
-                minTickSize: [5, "minute"]
+                tickSize: [30, "second"],
+                tickFormatter: function(v, axis) {
+                    var date = new Date(v);
+                    if (date.getSeconds() % 20 == 0) {
+                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                        return hours + ":" + minutes + ":" + seconds;
+                    } else {
+                        return "";
+                    }
+                }
             },
             lines: {
                 fill: false,
@@ -394,7 +430,19 @@ var charts = {
             },
             xaxis: {
                 mode: "time",
-                minTickSize: [5, "minute"]
+                tickSize: [30, "second"],
+                tickFormatter: function(v, axis) {
+                    var date = new Date(v);
+                    if (date.getSeconds() % 20 == 0) {
+                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                        return hours + ":" + minutes + ":" + seconds;
+                    } else {
+                        return "";
+                    }
+                }
             },
             lines: {
                 fill: false,
@@ -414,9 +462,21 @@ var charts = {
             yaxis: {
                 tickDecimals: 1
             },
-            xaxis: {
+             xaxis: {
                 mode: "time",
-                minTickSize: [5, "minute"]
+                tickSize: [30, "second"],
+                tickFormatter: function(v, axis) {
+                    var date = new Date(v);
+                    if (date.getSeconds() % 20 == 0) {
+                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                        return hours + ":" + minutes + ":" + seconds;
+                    } else {
+                        return "";
+                    }
+                }
             },
             lines: {
                 fill: false,
@@ -436,9 +496,21 @@ var charts = {
             yaxis: {
                 tickDecimals: 1
             },
-            xaxis: {
+             xaxis: {
                 mode: "time",
-                minTickSize: [5, "minute"]
+                tickSize: [30, "second"],
+                tickFormatter: function(v, axis) {
+                    var date = new Date(v);
+                    if (date.getSeconds() % 20 == 0) {
+                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                        return hours + ":" + minutes + ":" + seconds;
+                    } else {
+                        return "";
+                    }
+                }
             },
             lines: {
                 fill: false,
@@ -460,7 +532,19 @@ var charts = {
             },
             xaxis: {
                 mode: "time",
-                minTickSize: [5, "minute"]
+                tickSize: [30, "second"],
+                tickFormatter: function(v, axis) {
+                    var date = new Date(v);
+                    if (date.getSeconds() % 20 == 0) {
+                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                        return hours + ":" + minutes + ":" + seconds;
+                    } else {
+                        return "";
+                    }
+                }
             },
             lines: {
                 fill: false,
@@ -482,7 +566,19 @@ var charts = {
             },
             xaxis: {
                 mode: "time",
-                minTickSize: [5, "minute"]
+                tickSize: [30, "second"],
+                tickFormatter: function(v, axis) {
+                    var date = new Date(v);
+                    if (date.getSeconds() % 20 == 0) {
+                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                        return hours + ":" + minutes + ":" + seconds;
+                    } else {
+                        return "";
+                    }
+                }
             },
             lines: {
                 fill: false,
@@ -662,10 +758,8 @@ var screenBrightness = {
         var checked = document.getElementById("screenOn").checked;
         if (checked === true) {
             VolumeControl.setKeepScreenOn(true);
-            console.log("LCD ON");
         } else {
             VolumeControl.setKeepScreenOn(false);
-            console.log("LCD OFF");
         }
     }
 };
