@@ -91,13 +91,13 @@
             <!-- Nav tabs -->
             <div class="card">
                <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation"  class="active">
+<!--                  <li role="presentation"  class="active">
                      <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-home">
-                           <!--<img src="img/home.svg"/>-->
+                           <img src="img/home.svg"/>
                         </span>
                      </a>
-                  </li>
+                  </li>-->
                   <li role="presentation">
                      <a href="#export" aria-controls="export" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-export"></span><!--<img src="img/export.svg"/>-->
@@ -122,7 +122,7 @@
                         </span>
                      </a>
                   </li>
-                  <li role="presentation">
+                  <li role="presentation" class="active">
                      <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-wrench">
                            <!--<img src="img/bluetooth.svg"/>-->
@@ -132,7 +132,7 @@
                </ul>
                <!-- Tab panes -->
                <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane active" id="home">
+                  <div role="tabpanel" class="tab-pane" id="home">
                      <img src="img/pegasus_head.JPG">
                      <br>
                      Pegasus Astro was created by amateur astronomers for amateur astronomers. Having been familiar with the field of astrophotography for more than ten years, we decided to create reliable and good priced products for use in amateur astronomy.<br><br>
@@ -341,7 +341,7 @@
                          <button class="btn btn-primary btn-sm" id="flatboxLoader" onclick="window.location.href='digitalFlatBox.html'">Launch FlatBlet</button>
                      </div>
                   </div>
-                  <div role="tabpanel" class="tab-pane" id="settings">
+                  <div role="tabpanel" class="tab-pane active" id="settings">
                      <div id="connectionScreen">
                         <h4>Paired Devices</h4>
                         <ul id="deviceList" class="list-group">                                             

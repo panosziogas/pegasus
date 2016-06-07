@@ -268,16 +268,14 @@ var blueToothCtrl = {
                 currentChartData.push([curDate, Number(current)]);
             } else {
                 currentChartData.shift();
-            }
-            console.log(currentChartData);
+            }          
             charts.currentChartInitialize();
             //////////////////////////////////////////////
             if (powerChartData.length < dataMaxSize) {
                 powerChartData.push([curDate, Number(power)]);
             } else {
                 powerChartData.shift();
-            }
-            console.log(powerChartData);
+            }           
             charts.powerChartInitialize();
         }
     },

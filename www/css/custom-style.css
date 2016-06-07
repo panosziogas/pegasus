@@ -152,8 +152,13 @@ body {
 	}        
         
 .container { 
-    background: #3f51b5;          
+    background: #3778b8;          
 } 
+
+.navbar-default {
+    background: #3778b8; 
+    background-color: #3778b8!important;
+}
 
 .card{
     background: #000000;
