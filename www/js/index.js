@@ -29,8 +29,7 @@ var app = {
         lcdScreens.dewPointLcd();
         lcdScreens.voltLcd();
         lcdScreens.currentLcd();
-        lcdScreens.powerLcd();
-        //BoxKite.ToggleableButton.init();
+        lcdScreens.powerLcd();        
         appearance.hideElemenets();
 
         $(".toggle-switch").bootstrapSwitch();
@@ -270,13 +269,15 @@ var blueToothCtrl = {
             } else {
                 currentChartData.shift();
             }
+            console.log(currentChartData);
             charts.currentChartInitialize();
             //////////////////////////////////////////////
-            if (powerChartData < dataMaxSize) {
+            if (powerChartData.length < dataMaxSize) {
                 powerChartData.push([curDate, Number(power)]);
             } else {
                 powerChartData.shift();
             }
+            console.log(powerChartData);
             charts.powerChartInitialize();
         }
     },
@@ -738,6 +739,13 @@ var powerToggles = {
         var commandToSend = command + ":" + state + "\n";
         console.log(commandToSend);
         blueToothCtrl.sendToPowerBox(commandToSend);
+    },
+    disableToggle: function(){      
+        var checked = document.getElementById("togglesDisable").checked;                   
+        $('#firstToggle').bootstrapSwitch('toggleDisabled');
+        $('#secondToggle').bootstrapSwitch('toggleDisabled');
+        $('#thirdToggle').bootstrapSwitch('toggleDisabled');
+        $('#fourthToggle').bootstrapSwitch('toggleDisabled');        
     }
 };
 
