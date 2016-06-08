@@ -234,7 +234,7 @@ var blueToothCtrl = {
             }
 
             var curDate = new Date().getTime();
-            var dataMaxSize = 60;
+            var dataMaxSize = 180;
 
             if (temperatureChartData.length < dataMaxSize) {
                 temperatureChartData.push([curDate, Number(temp)]);
@@ -403,7 +403,7 @@ var charts = {
                         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
                         var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                        return hours + ":" + minutes + ":" + seconds;
+                        return hours + ":" + minutes;
                     } else {
                         return "";
                     }
@@ -429,7 +429,7 @@ var charts = {
             },
             xaxis: {
                 mode: "time",
-                tickSize: [30, "second"],
+                tickSize: [60, "second"],
                 tickFormatter: function(v, axis) {
                     var date = new Date(v);
                     if (date.getSeconds() % 20 == 0) {
@@ -437,7 +437,7 @@ var charts = {
                         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
                         var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                        return hours + ":" + minutes + ":" + seconds;
+                        return hours + ":" + minutes;
                     } else {
                         return "";
                     }
@@ -463,7 +463,7 @@ var charts = {
             },
              xaxis: {
                 mode: "time",
-                tickSize: [30, "second"],
+                tickSize: [60, "second"],
                 tickFormatter: function(v, axis) {
                     var date = new Date(v);
                     if (date.getSeconds() % 20 == 0) {
@@ -471,7 +471,7 @@ var charts = {
                         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
                         var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                        return hours + ":" + minutes + ":" + seconds;
+                        return hours + ":" + minutes;
                     } else {
                         return "";
                     }
@@ -497,7 +497,7 @@ var charts = {
             },
              xaxis: {
                 mode: "time",
-                tickSize: [30, "second"],
+                tickSize: [60, "second"],
                 tickFormatter: function(v, axis) {
                     var date = new Date(v);
                     if (date.getSeconds() % 20 == 0) {
@@ -505,7 +505,7 @@ var charts = {
                         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
                         var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                        return hours + ":" + minutes + ":" + seconds;
+                        return hours + ":" + minutes;
                     } else {
                         return "";
                     }
@@ -531,7 +531,7 @@ var charts = {
             },
             xaxis: {
                 mode: "time",
-                tickSize: [30, "second"],
+                tickSize: [60, "second"],
                 tickFormatter: function(v, axis) {
                     var date = new Date(v);
                     if (date.getSeconds() % 20 == 0) {
@@ -539,7 +539,7 @@ var charts = {
                         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
                         var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                        return hours + ":" + minutes + ":" + seconds;
+                        return hours + ":" + minutes;
                     } else {
                         return "";
                     }
@@ -565,7 +565,7 @@ var charts = {
             },
             xaxis: {
                 mode: "time",
-                tickSize: [30, "second"],
+                tickSize: [60, "second"],
                 tickFormatter: function(v, axis) {
                     var date = new Date(v);
                     if (date.getSeconds() % 20 == 0) {
@@ -573,7 +573,7 @@ var charts = {
                         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
                         var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                        return hours + ":" + minutes + ":" + seconds;
+                        return hours + ":" + minutes;
                     } else {
                         return "";
                     }

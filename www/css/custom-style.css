@@ -157,7 +157,7 @@ body {
 
 .navbar-default {
     background: #3778b8; 
-    background-color: #3778b8!important;
+    background-color: #3778b8!important;  
 }
 
 .card{
@@ -206,4 +206,13 @@ body {
 }
 
 
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: auto;  
+  width: auto;
+  padding-top: 15px;  
+  padding-left: 0px;
+}
 
