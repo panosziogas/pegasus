@@ -61,6 +61,9 @@ var app = {
 
         var brightNessOnChange = _.throttle(screenBrightness.dimLcd, 50);
         $('#dimDisplaySlider').on('change', brightNessOnChange);
+        
+        var brightNessOnChange2 = _.throttle(screenBrightness.dimLcdModal, 50);
+        $('#dimDisplaySlider2').on('change', brightNessOnChange2);
 
     },
     deviceready: function() {
@@ -68,8 +71,7 @@ var app = {
         refreshButton.ontouchstart = blueToothCtrl.list;
         refreshGeoButton.ontouchstart = geo.refreshGeo;
         heatersOff.ontouchstart = dewHeatersCtrl.dewHeatersOff;
-        heatersFull.ontouchstart = dewHeatersCtrl.dewHeatersMax;
-        //navigator.geolocation.getCurrentPosition(geo.geoOnSuccess, geo.geoOnFail);
+        heatersFull.ontouchstart = dewHeatersCtrl.dewHeatersMax;       
         saveLabels.ontouchstart = fileHandler.getLabelValueAndSave;
         fileHandler.getLabesOnStart();
         disconnectButton.ontouchstart = blueToothCtrl.disconnect;
@@ -87,17 +89,14 @@ var app = {
 };
 
 var blueToothCtrl = {
-    list: function(event) {
-        //blueToothCtrl.btStatus("Looking for Bluetooth Devices...");
+    list: function(event) {       
         bluetoothSerial.list(blueToothCtrl.ondevicelist, blueToothCtrl.generateFailureFunction("List Failed"));
     },
     connect: function(e) {
-        device = e.target.getAttribute('deviceId');
-        //blueToothCtrl.btStatus("Requesting connection to " + device);
+        device = e.target.getAttribute('deviceId');      
         bluetoothSerial.connect(device, blueToothCtrl.onconnect(device), blueToothCtrl.ondisconnect);
     },
-    disconnect: function(event) {
-        //("Disconnecting...");
+    disconnect: function(event) {       
         console.log(event);
         bluetoothSerial.disconnect(blueToothCtrl.ondisconnect, false);
     },
@@ -135,8 +134,7 @@ var blueToothCtrl = {
     },
     ondevicelist: function(devices) {
         var listItem, deviceId;
-        deviceList.innerHTML = "";
-        //blueToothCtrl.btStatus("");
+        deviceList.innerHTML = "";       
 
         devices.forEach(function(device) {
             listItem = document.createElement('li');
@@ -292,8 +290,8 @@ function getBtData() {
 var lcdScreens = {
     tempLcd: function() {
         var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
-            steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
-            steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
+            steelseries.Section(70, 95, 'rgba(51, 122, 183, 1.0)'),
+            steelseries.Section(95, 100, 'rgba(51, 122, 183, 1.0)')
         ];
 
         temperatureLcd = new steelseries.DisplaySingle('canvasSingle1', {
@@ -305,9 +303,8 @@ var lcdScreens = {
         temperatureLcd.setLcdColor(steelseries.LcdColor.SECTIONS);
     },
     humLcd: function() {
-        var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
-            steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
-            steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
+        var sections = [steelseries.Section(0, 80, 'rgba(51, 122, 183, 1.0)'),
+            steelseries.Section(80, 100, 'rgba(255, 0, 0, 1.0)')            
         ];
 
         humidityLcd = new steelseries.DisplaySingle('canvasSingle2', {
@@ -321,8 +318,8 @@ var lcdScreens = {
     },
     dewPointLcd: function() {
         var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
-            steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
-            steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
+            steelseries.Section(70, 95, 'rgba(51, 122, 183, 1.0)'),
+            steelseries.Section(95, 100, 'rgba(51, 122, 183, 1.0)')
         ];
 
         dewLcd = new steelseries.DisplaySingle('canvasSingle3', {
@@ -334,9 +331,9 @@ var lcdScreens = {
         dewLcd.setLcdColor(steelseries.LcdColor.SECTIONS);
     },
     voltLcd: function() {
-        var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
-            steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
-            steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
+        var sections = [steelseries.Section(0, 11, 'rgba(255, 0, 0, 1.0)'),
+            steelseries.Section(11, 13, 'rgba(51, 122, 183, 1.0)'),
+            steelseries.Section(13, 100, 'rgba(255, 0, 0, 1.0)')
         ];
 
         voltageLcd = new steelseries.DisplaySingle('canvasSingle4', {
@@ -349,8 +346,8 @@ var lcdScreens = {
     },
     currentLcd: function() {
         var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
-            steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
-            steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
+            steelseries.Section(70, 95, 'rgba(51, 122, 183, 1.0)'),
+            steelseries.Section(95, 100, 'rgba(51, 122, 183, 1.0)')
         ];
 
         currLcd = new steelseries.DisplaySingle('canvasSingle5', {
@@ -363,8 +360,8 @@ var lcdScreens = {
     },
     powerLcd: function() {
         var sections = [steelseries.Section(0, 70, 'rgba(51, 122, 183, 1.0)'),
-            steelseries.Section(70, 95, 'rgba(255, 255, 0, 1.0)'),
-            steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
+            steelseries.Section(70, 95, 'rgba(51, 122, 183, 1.0)'),
+            steelseries.Section(95, 100, 'rgba(51, 122, 183, 1.0)')
         ];
 
         powLcd = new steelseries.DisplaySingle('canvasSingle6', {
@@ -676,11 +673,6 @@ var geo = {
         console.log("finding cordinates...");
         var longitude = position.coords.longitude;
         var latitude = position.coords.latitude;
-
-
-//        var element = document.getElementById('geolocation');
-//        element.innerHTML = 'Latitude: ' + latitude + ' <br>' + 'Longitude: ' + longitude;
-
         getWeather(latitude, longitude);
     },
     geoOnFail: function(fail) {
@@ -740,6 +732,11 @@ var screenBrightness = {
         var dimValue = dimDisplaySlider.value;
         VolumeControl.setBrightness(dimValue, screenBrightness.dimOnSuccess, screenBrightness.dimOnFail);
     },
+    dimLcdModal: function() {
+        var VolumeControl = cordova.plugins.brightness;
+        var dimValue = dimDisplaySlider2.value;
+        VolumeControl.setBrightness(dimValue, screenBrightness.dimOnSuccess, screenBrightness.dimOnFail);
+    },
     dimOnSuccess: function() {
         console.log("Dim succeed");
     },
@@ -753,6 +750,17 @@ var screenBrightness = {
             VolumeControl.setKeepScreenOn(true);
         } else {
             VolumeControl.setKeepScreenOn(false);
+        }
+    },
+    lcdModalOn: function() {
+        var VolumeControl = cordova.plugins.brightness;
+        var checked = document.getElementById("screenOnModal").checked;
+        if (checked === true) {
+            VolumeControl.setKeepScreenOn(true);
+             console.log("Dim true");
+        } else {
+            VolumeControl.setKeepScreenOn(false);
+             console.log("Dim false");
         }
     }
 };
@@ -828,8 +836,8 @@ var appearance = {
         $("#disconnectButton").hide();
         $("#connectionWait").show();
         $("#connectionWait2").show();
-        connectionWait.innerText = "Connect device first..";
-        connectionWait2.innerText = "Connect device first..";
+        connectionWait.innerText = "Move to settings and connect to bluetooth device";
+        connectionWait2.innerText = "Move to settings and connect to bluetooth device";
         $("#powerToggles").hide();
         $("#inputData").hide();
         $("#colorScreen").hide();

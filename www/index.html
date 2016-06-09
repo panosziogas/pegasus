@@ -91,13 +91,13 @@
             <!-- Nav tabs -->
             <div class="card">
                <ul class="nav nav-tabs" role="tablist">
-<!--                  <li role="presentation"  class="active">
+                  <!--                  <li role="presentation"  class="active">
                      <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-home">
                            <img src="img/home.svg"/>
                         </span>
                      </a>
-                  </li>-->
+                     </li>-->
                   <li role="presentation">
                      <a href="#export" aria-controls="export" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-export"></span><!--<img src="img/export.svg"/>-->
@@ -151,7 +151,7 @@
                            <tbody>
                               <tr>
                                  <td>
-                                     <div id="label1">1.</div>
+                                    <div id="label1">1.</div>
                                  </td>
                                  <td>
                                     <input type="checkbox" id="firstToggle" name="firstToggle" checked class="toggle-switch">
@@ -175,7 +175,7 @@
                               </tr>
                               <tr>
                                  <td>
-                                      <div id="label4">4.</div>
+                                    <div id="label4">4.</div>
                                  </td>
                                  <td>
                                     <input type="checkbox" id="fourthToggle" name="fourthToggle" checked class="toggle-switch">
@@ -184,8 +184,8 @@
                            </tbody>
                         </table>
                         <div class="checkbox">
-                            <label><input id="togglesDisable" type="checkbox" onClick="powerToggles.disableToggle()">Disable Power Switches</label>
-                         </div>
+                           <label><input id="togglesDisable" type="checkbox" onClick="powerToggles.disableToggle()">Disable Power Switches</label>
+                        </div>
                      </div>
                      <div id="colorScreen">
                         <hr>
@@ -206,10 +206,10 @@
                            <tbody>
                               <tr>
                                  <td>
-                                       <button class="btn btn-primary btn-sm" id="heatersOff">OFF</button>
+                                    <button class="btn btn-primary btn-sm" id="heatersOff">OFF</button>
                                  </td>
                                  <td>
-                                       <button class="btn btn-primary btn-sm" id="heatersFull">FULL</button>
+                                    <button class="btn btn-primary btn-sm" id="heatersFull">FULL</button>
                                  </td>
                                  <td>
                                     <div class="checkbox">
@@ -241,108 +241,139 @@
                   <div role="tabpanel" class="tab-pane" id="geolocation_tab">
                      <h4>GPS Location & Current Weather</h4>
                      <hr>
-                        <button class="btn btn-primary btn-sm" id="refreshGeoButton">Refresh Geolocation Data</button>                        
+                     <button class="btn btn-primary btn-sm" id="refreshGeoButton">Refresh Geolocation Data</button>                        
                      <div id="geolocation">
-                     <hr>
-                     <div id="lon">&nbsp;</div>
-                     <div id="lat">&nbsp;</div>
-                     <div id="weather_city_description">&nbsp;</div>
-                     <div id="weather_temp">&nbsp;</div>
-                     <div id="weather_temp_high">&nbsp;</div>
-                     <div id="weather_temp_low">&nbsp;</div>
-                     <div id="weather_humidity">&nbsp;</div>
-                     <div id="weather_pressure">&nbsp;</div>
-                     <div id="weather_wind">&nbsp;</div>
-                     <div id="wind_direction">&nbsp;</div>
-                     <div id="weather_visibility">&nbsp;</div>  
-                     <div id="cloud_coverage">&nbsp;</div>                     
-                     <hr>
-                     <div id="sunrise">&nbsp;</div>
-                     <div id="sunset">&nbsp;</div>
-                     <hr>
-                     <div id="map"></div>    
-                     <hr>
+                        <hr>
+                        <div id="lon">&nbsp;</div>
+                        <div id="lat">&nbsp;</div>
+                        <div id="weather_city_description">&nbsp;</div>
+                        <div id="weather_temp">&nbsp;</div>
+                        <div id="weather_temp_high">&nbsp;</div>
+                        <div id="weather_temp_low">&nbsp;</div>
+                        <div id="weather_humidity">&nbsp;</div>
+                        <div id="weather_pressure">&nbsp;</div>
+                        <div id="weather_wind">&nbsp;</div>
+                        <div id="wind_direction">&nbsp;</div>
+                        <div id="weather_visibility">&nbsp;</div>
+                        <div id="cloud_coverage">&nbsp;</div>
+                        <hr>
+                        <div id="sunrise">&nbsp;</div>
+                        <div id="sunset">&nbsp;</div>
+                        <hr>
+                        <div id="map"></div>
+                        <hr>
                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="input">
-                    <div id="connectionWait2"></div>
-                    <div id="inputData">
-                     <h4>Sensor Metrics:</h4>
-                      <hr>
-                     <table class="lcdsTable">
-                        <tbody>
-                           <tr>
-                               <td>Voltage(V)</td>
-                              <td>Current(A)</td>
-                              <td>Power(W)</td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <canvas id="canvasSingle4" width="150" height="50"></canvas>
-                              </td>
-                              <td>
-                                 <canvas id="canvasSingle5" width="150" height="50"></canvas>
-                              </td>
-                              <td>
-                                 <canvas id="canvasSingle6" width="150" height="50"></canvas>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Temp °C</td>
-                              <td>Humidity %</td>
-                              <td>Dew Point °C</td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <canvas id="canvasSingle1" width="150" height="50"></canvas>
-                              </td>
-                              <td>
-                                 <canvas id="canvasSingle2" width="150" height="50"></canvas>
-                              </td>
-                              <td>
-                                 <canvas id="canvasSingle3" width="150" height="50"></canvas>
-                              </td>
-                           </tr>
-                        <tbody>
-                     </table>   
-                      <hr>
-                      <h4>Charts:</h4>
-                      <hr>
-                     <ul class="nav nav-tabs">
-                        <li role="presentation"><a href="#tempTab" aria-controls="export" role="tab" data-toggle="tab">Temperature</span></a></li>
-                        <li role="presentation"><a href="#humidityTab" aria-controls="export" role="tab" data-toggle="tab">Humidity</span></a></li>
-                       <li role="presentation"><a href="#dewPointTab" aria-controls="export" role="tab" data-toggle="tab">Dew Point</span></a></li>
-                        <li role="presentation"><a href="#voltageTab" aria-controls="export" role="tab" data-toggle="tab">Voltage</span></a></li>
-                        <li role="presentation"><a href="#currentTab" aria-controls="export" role="tab" data-toggle="tab">Current</span></a></li>
-                        <li role="presentation"><a href="#powerTab" aria-controls="export" role="tab" data-toggle="tab">Power</span></a></li>                        
-                     </ul>
-                     <div class="tab-content">
-                        <div id="tempTab" class="tab-pane fade">
-                          <div id="tempChart" style="width:100%;height:300px"></div>
-                        </div>
-                        <div id="humidityTab" class="tab-pane fade">
-                           <div id="humidityChart" style="width:100%;height:300px"></div>
-                        </div>
-                        <div id="dewPointTab" class="tab-pane fade">
-                            <div id="dewPointChart" style="width:100%;height:300px"></div>
-                        </div>
-                        <div id="voltageTab" class="tab-pane fade">
-                            <div id="voltageChart" style="width:100%;height:300px"></div>
-                        </div>
-                         <div id="currentTab" class="tab-pane fade">
-                           <div id="currentChart" style="width:100%;height:300px"></div>
-                        </div>
-                        <div id="powerTab" class="tab-pane fade">
-                           <div id="powerChart" style="width:100%;height:300px"></div>
+                     <div id="connectionWait2"></div>
+                     <div id="inputData">
+                        <h4>Sensor Metrics:</h4>
+                        <hr>
+                        <table class="lcdsTable">
+                           <tbody>
+                              <tr>
+                                 <td>Voltage(V)</td>
+                                 <td>Current(A)</td>
+                                 <td>Power(W)</td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <canvas id="canvasSingle4" width="150" height="50"></canvas>
+                                 </td>
+                                 <td>
+                                    <canvas id="canvasSingle5" width="150" height="50"></canvas>
+                                 </td>
+                                 <td>
+                                    <canvas id="canvasSingle6" width="150" height="50"></canvas>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>Temp °C</td>
+                                 <td>Humidity %</td>
+                                 <td>Dew Point °C</td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <canvas id="canvasSingle1" width="150" height="50"></canvas>
+                                 </td>
+                                 <td>
+                                    <canvas id="canvasSingle2" width="150" height="50"></canvas>
+                                 </td>
+                                 <td>
+                                    <canvas id="canvasSingle3" width="150" height="50"></canvas>
+                                 </td>
+                              </tr>
+                           <tbody>
+                        </table>
+                        <hr>
+                        <h4>Charts:</h4>
+                        <hr>
+                        <ul class="nav nav-tabs">
+                           <li role="presentation"><a href="#tempTab" aria-controls="export" role="tab" data-toggle="tab">Temperature</span></a></li>
+                           <li role="presentation"><a href="#humidityTab" aria-controls="export" role="tab" data-toggle="tab">Humidity</span></a></li>
+                           <li role="presentation"><a href="#dewPointTab" aria-controls="export" role="tab" data-toggle="tab">Dew Point</span></a></li>
+                           <li role="presentation"><a href="#voltageTab" aria-controls="export" role="tab" data-toggle="tab">Voltage</span></a></li>
+                           <li role="presentation"><a href="#currentTab" aria-controls="export" role="tab" data-toggle="tab">Current</span></a></li>
+                           <li role="presentation"><a href="#powerTab" aria-controls="export" role="tab" data-toggle="tab">Power</span></a></li>
+                        </ul>
+                        <div class="tab-content">
+                           <div id="tempTab" class="tab-pane fade">
+                              <div id="tempChart" style="width:100%;height:300px"></div>
+                           </div>
+                           <div id="humidityTab" class="tab-pane fade">
+                              <div id="humidityChart" style="width:100%;height:300px"></div>
+                           </div>
+                           <div id="dewPointTab" class="tab-pane fade">
+                              <div id="dewPointChart" style="width:100%;height:300px"></div>
+                           </div>
+                           <div id="voltageTab" class="tab-pane fade">
+                              <div id="voltageChart" style="width:100%;height:300px"></div>
+                           </div>
+                           <div id="currentTab" class="tab-pane fade">
+                              <div id="currentChart" style="width:100%;height:300px"></div>
+                           </div>
+                           <div id="powerTab" class="tab-pane fade">
+                              <div id="powerChart" style="width:100%;height:300px"></div>
+                           </div>
                         </div>
                      </div>
-                     </div>                                     
                   </div>
                   <div role="tabpanel" class="tab-pane" id="digital_flatbox">
-                     <div style="margin: 10px">                                  
-                         <p>Use your mobile device as a flatbox surface.</p>
-                         <p>Dim the brightness of your screen  to capture the required ADU for your flat calibration files.</p>
-                         <button class="btn btn-primary btn-sm" id="flatboxLoader" onclick="window.location.href='digitalFlatBox.html'">Launch FlatBlet</button>
+                     <p>Use your mobile device as a flatbox surface.</p>
+                     <p>Dim the brightness of your screen  to capture the required ADU for your flat calibration files.</p>
+<!--                     <button class="btn btn-primary btn-sm" id="flatboxLoader" onclick="window.location.href='digitalFlatBox.html'">Launch FlatBlet</button>                                         -->
+                     <button class="btn btn-primary btn-sm" id="flatboxLoader" data-toggle="modal" data-target="#modal-fullscreen">                                
+                     Launch FlatBlet
+                     </button>                     
+                     <div class="modal modal-fullscreen" id="modal-fullscreen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                 <h4 class="modal-title" id="myModalLabel">FlatBlet</h4>
+                              </div>
+                              <div class="modal-body">
+                                 <table class="flatBoxTable" bgcolor="#808080">
+                                    <tbody>
+                                       <tr>
+                                          <td>
+                                             <div class="rangeDiv">
+                                                <input type="range"  min="0" max="1" value="1" step ="0.01" name="dimDisplaySlider2" id="dimDisplaySlider2" class="topcoat-range"/>
+                                                <div class="checkbox">
+                                                    <label><input id="screenOnModal" type="checkbox" onClick="screenBrightness.lcdModalOn()"><font color="black">Keep Display ON</font</label>
+                                                </div>
+                                             </div>
+                                          </td>                        
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane active" id="settings">
@@ -355,10 +386,10 @@
                            <tbody>
                               <tr>
                                  <td>
-                                       <button class="btn btn-primary btn-sm" id="refreshButton">Refresh</button>
+                                    <button class="btn btn-primary btn-sm" id="refreshButton">Refresh</button>
                                  </td>
                                  <td>
-                                       <button class="btn btn-primary btn-sm" id="disconnectButton">Disconnect</button>
+                                    <button class="btn btn-primary btn-sm" id="disconnectButton">Disconnect</button>
                                  </td>
                               </tr>
                            </tbody>
@@ -389,14 +420,14 @@
                            <label for="usr">Output 4:</label>
                            <input type="text" class="form-control" id="output4">
                         </div>
-                           <button class="btn btn-primary btn-sm" id="saveLabels">Save</button>
+                        <button class="btn btn-primary btn-sm" id="saveLabels">Save</button>
                      </div>
                   </div>
                </div>
             </div>
          </div>
          <div id="messageDiv">
-            <!-- Card Projects 
+            <!--             Card Projects 
                <div class="col-md-6 col-md-offset-3">
                    <div class="card">
                        <div class="card-image">
@@ -467,8 +498,8 @@
       <!--<script src="js/jquery-1.9.1.min.js"></script>-->
       <script type="text/javascript" src="js/underscore-min.js"></script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5LRLSJLZwdbJ1UdOVinb-mze_RJb5lxE"> </script>
-<!--      <script src="http://code.highcharts.com/3.0.5/highcharts.js"></script>
-      <script src="http://code.highcharts.com/3.0.5/highcharts-more.js"></script>-->
+      <!--      <script src="http://code.highcharts.com/3.0.5/highcharts.js"></script>
+         <script src="http://code.highcharts.com/3.0.5/highcharts-more.js"></script>-->
       <script type='text/javascript' src='js/tween.js'></script>
       <script type='text/javascript' src='js/steelseries-min.js'></script>
       <script type="text/javascript" src="js/progressbar.min.js"></script>
@@ -476,7 +507,7 @@
       <script type="text/javascript" src="js/bootstrap-switch.js"></script>  
       <script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
       <script language="javascript" type="text/javascript" src="js/jquery.flot.time.js"></script>
-<!--      <script language="javascript" type="text/javascript" src="js/Smooth.js"></script>-->
+      <!--      <script language="javascript" type="text/javascript" src="js/Smooth.js"></script>-->
       <script type="text/javascript">
          app.initialize();
       </script>     
