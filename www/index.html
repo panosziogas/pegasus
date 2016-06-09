@@ -151,7 +151,7 @@
                            <tbody>
                               <tr>
                                  <td>
-                                    <p id="label1"></p>
+                                     <div id="label1">1.</div>
                                  </td>
                                  <td>
                                     <input type="checkbox" id="firstToggle" name="firstToggle" checked class="toggle-switch">
@@ -159,7 +159,7 @@
                               </tr>
                               <tr>
                                  <td>
-                                    <p id="label2"></p>
+                                    <div id="label2">2.</div>
                                  </td>
                                  <td>
                                     <input type="checkbox" id="secondToggle" name="secondToggle" checked class="toggle-switch">
@@ -167,7 +167,7 @@
                               </tr>
                               <tr>
                                  <td>
-                                    <p id="label3"></p>
+                                    <div id="label3">3.</div>
                                  </td>
                                  <td>
                                     <input type="checkbox" id="thirdToggle" name="thirdToggle" checked class="toggle-switch">
@@ -175,7 +175,7 @@
                               </tr>
                               <tr>
                                  <td>
-                                    <p id="label4"></p>
+                                      <div id="label4">4.</div>
                                  </td>
                                  <td>
                                     <input type="checkbox" id="fourthToggle" name="fourthToggle" checked class="toggle-switch">
@@ -194,7 +194,6 @@
                            <input type="range"  min="0" max="255" value="0" name="flatBoxSlider" id="flatBoxSlider" class="topcoat-range"/>
                         </div>
                         <div id="my-progressbar"></div>
-                        <!--                  <canvas id='canvasLinear1'></canvas>-->
                         <div id="rgbText">
                            &nbsp;
                         </div>
@@ -207,14 +206,10 @@
                            <tbody>
                               <tr>
                                  <td>
-                                    <div style="margin: 10px">           
                                        <button class="btn btn-primary btn-sm" id="heatersOff">OFF</button>
-                                    </div>
                                  </td>
                                  <td>
-                                    <div style="margin: 10px">           
                                        <button class="btn btn-primary btn-sm" id="heatersFull">FULL</button>
-                                    </div>
                                  </td>
                                  <td>
                                     <div class="checkbox">
@@ -246,18 +241,27 @@
                   <div role="tabpanel" class="tab-pane" id="geolocation_tab">
                      <h4>GPS Location & Current Weather</h4>
                      <hr>
-                     <div id="geolocation">Finding geolocation...</div>
+                        <button class="btn btn-primary btn-sm" id="refreshGeoButton">Refresh Geolocation Data</button>                        
+                     <div id="geolocation">
+                     <hr>
+                     <div id="lon">&nbsp;</div>
+                     <div id="lat">&nbsp;</div>
                      <div id="weather_city_description">&nbsp;</div>
                      <div id="weather_temp">&nbsp;</div>
+                     <div id="weather_temp_high">&nbsp;</div>
+                     <div id="weather_temp_low">&nbsp;</div>
                      <div id="weather_humidity">&nbsp;</div>
                      <div id="weather_pressure">&nbsp;</div>
                      <div id="weather_wind">&nbsp;</div>
-                     <div id="weather_visibility">&nbsp;</div>
-                     <div id="weather_sunrise">&nbsp;</div>
-                     <div id="weather_sunset">&nbsp;</div>
-                     <div id="map"></div>
-                     <div style="margin: 10px">           
-                        <button class="btn btn-primary btn-sm" id="refreshGeoButton">Refresh Location</button>
+                     <div id="wind_direction">&nbsp;</div>
+                     <div id="weather_visibility">&nbsp;</div>  
+                     <div id="cloud_coverage">&nbsp;</div>                     
+                     <hr>
+                     <div id="sunrise">&nbsp;</div>
+                     <div id="sunset">&nbsp;</div>
+                     <hr>
+                     <div id="map"></div>    
+                     <hr>
                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="input">
@@ -351,14 +355,10 @@
                            <tbody>
                               <tr>
                                  <td>
-                                    <div style="margin: 10px">           
                                        <button class="btn btn-primary btn-sm" id="refreshButton">Refresh</button>
-                                    </div>
                                  </td>
                                  <td>
-                                    <div style="margin: 10px">           
                                        <button class="btn btn-primary btn-sm" id="disconnectButton">Disconnect</button>
-                                    </div>
                                  </td>
                               </tr>
                            </tbody>
@@ -389,9 +389,7 @@
                            <label for="usr">Output 4:</label>
                            <input type="text" class="form-control" id="output4">
                         </div>
-                        <div style="margin: 10px">           
                            <button class="btn btn-primary btn-sm" id="saveLabels">Save</button>
-                        </div>
                      </div>
                   </div>
                </div>

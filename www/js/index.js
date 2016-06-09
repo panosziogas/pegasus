@@ -29,7 +29,7 @@ var app = {
         lcdScreens.dewPointLcd();
         lcdScreens.voltLcd();
         lcdScreens.currentLcd();
-        lcdScreens.powerLcd();        
+        lcdScreens.powerLcd();
         appearance.hideElemenets();
 
         $(".toggle-switch").bootstrapSwitch();
@@ -69,7 +69,7 @@ var app = {
         refreshGeoButton.ontouchstart = geo.refreshGeo;
         heatersOff.ontouchstart = dewHeatersCtrl.dewHeatersOff;
         heatersFull.ontouchstart = dewHeatersCtrl.dewHeatersMax;
-        navigator.geolocation.getCurrentPosition(geo.geoOnSuccess, geo.geoOnFail);
+        //navigator.geolocation.getCurrentPosition(geo.geoOnSuccess, geo.geoOnFail);
         saveLabels.ontouchstart = fileHandler.getLabelValueAndSave;
         fileHandler.getLabesOnStart();
         disconnectButton.ontouchstart = blueToothCtrl.disconnect;
@@ -268,14 +268,14 @@ var blueToothCtrl = {
                 currentChartData.push([curDate, Number(current)]);
             } else {
                 currentChartData.shift();
-            }          
+            }
             charts.currentChartInitialize();
             //////////////////////////////////////////////
             if (powerChartData.length < dataMaxSize) {
                 powerChartData.push([curDate, Number(power)]);
             } else {
                 powerChartData.shift();
-            }           
+            }
             charts.powerChartInitialize();
         }
     },
@@ -461,7 +461,7 @@ var charts = {
             yaxis: {
                 tickDecimals: 1
             },
-             xaxis: {
+            xaxis: {
                 mode: "time",
                 tickSize: [60, "second"],
                 tickFormatter: function(v, axis) {
@@ -495,7 +495,7 @@ var charts = {
             yaxis: {
                 tickDecimals: 1
             },
-             xaxis: {
+            xaxis: {
                 mode: "time",
                 tickSize: [60, "second"],
                 tickFormatter: function(v, axis) {
@@ -678,23 +678,10 @@ var geo = {
         var latitude = position.coords.latitude;
 
 
-        var element = document.getElementById('geolocation');
-        element.innerHTML = 'Latitude: ' + latitude + ' <br>' + 'Longitude: ' + longitude;
+//        var element = document.getElementById('geolocation');
+//        element.innerHTML = 'Latitude: ' + latitude + ' <br>' + 'Longitude: ' + longitude;
 
         getWeather(latitude, longitude);
-
-        var latLong = new google.maps.LatLng(latitude, longitude);
-        var mapOptions = {
-            center: latLong,
-            zoom: 13,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        var marker = new google.maps.Marker({
-            position: latLong,
-            map: map,
-            title: 'my location'
-        });
     },
     geoOnFail: function(fail) {
         var element = document.getElementById('geolocation');
@@ -738,12 +725,12 @@ var powerToggles = {
         console.log(commandToSend);
         blueToothCtrl.sendToPowerBox(commandToSend);
     },
-    disableToggle: function(){      
-        var checked = document.getElementById("togglesDisable").checked;                   
+    disableToggle: function() {
+        var checked = document.getElementById("togglesDisable").checked;
         $('#firstToggle').bootstrapSwitch('toggleDisabled');
         $('#secondToggle').bootstrapSwitch('toggleDisabled');
         $('#thirdToggle').bootstrapSwitch('toggleDisabled');
-        $('#fourthToggle').bootstrapSwitch('toggleDisabled');        
+        $('#fourthToggle').bootstrapSwitch('toggleDisabled');
     }
 };
 
@@ -853,6 +840,7 @@ var appearance = {
         setLcdValue(voltageLcd, 0);
         setLcdValue(currLcd, 0);
         setLcdValue(powLcd, 0);
+        $('#geolocation').hide();
     },
     revealElements: function() {
         $("#disconnectButton").show();
@@ -896,15 +884,45 @@ function getWeather(latitude, longitude) {
             $.getJSON(queryString, function(results) {
                 if (results.weather.length) {
                     $('#weather_city_description').text("City: " + results.name);
-                    $('#weather_temp').text("Temperature: " + results.main.temp + " °C");
-                    $('#weather_wind').text("Wind: " + results.wind.speed + " km/h");
+                    $('#weather_temp').text("Temperature: " + results.main.temp.toFixed(1) + " °C");
+                    $('#weather_wind').text("Wind: " + results.wind.speed.toFixed(1) + " km/h");
                     $('#weather_humidity').text("Humidity: " + results.main.humidity + " %");
                     $('#weather_visibility').text("Visibility: " + results.weather[0].main);
-                    $('#weather_pressure').text("Pressure: " + results.main.pressure + " mB");
-                    var sunriseDate = new Date(results.sys.sunrise);
-                    $('#weather_sunrise').text("Sunrise: " + sunriseDate.toLocaleTimeString());
-                    var sunsetDate = new Date(results.sys.sunset);
-                    $('#weather_sunset').text("Sunset: " + sunsetDate.toLocaleTimeString());
+                    $('#weather_pressure').text("Pressure: " + results.main.pressure.toFixed(1) + " mB");
+                    $('#lon').text("Longtitude: " + longitude.toFixed(2) +"°");
+                    $('#lat').text("Latitude: " + latitude.toFixed(2)+"°");
+                    $('#weather_temp_high').text("Max Temperature: " + results.main.temp_max.toFixed(1) + " °C");
+                    $('#weather_temp_low').text("Min Temperature: " + results.main.temp_min.toFixed(1) + " °C");
+                    $('#wind_direction').text("Wind Direction: " + results.wind.deg.toFixed(0)+"°");
+                    $('#cloud_coverage').text("Cloud Coverage: " + results.clouds.all+"%");         
+                    
+                    var dateSunRise = new Date(results.sys.sunrise*1000);
+                    var hoursSunRise = dateSunRise.getHours();
+                    var minutesSunRise = "0" + dateSunRise.getMinutes();
+                    var secondsSunRise = "0" + dateSunRise.getSeconds();
+                    var formattedTimeSunRise = hoursSunRise + ':' + minutesSunRise.substr(-2) + ':' + secondsSunRise.substr(-2);
+                    $('#sunrise').text("Sunrise: " + formattedTimeSunRise); 
+                    
+                    var dateSunSet = new Date(results.sys.sunset*1000);
+                    var hoursSunSet = dateSunSet.getHours();
+                    var minutesSunSet = "0" + dateSunSet.getMinutes();
+                    var secondsSunSet = "0" + dateSunSet.getSeconds();
+                    var formattedTimeSunSet = hoursSunSet + ':' + minutesSunSet.substr(-2) + ':' + secondsSunSet.substr(-2);
+                    $('#sunset').text("Sunrise: " + formattedTimeSunSet); 
+
+                    var latLong = new google.maps.LatLng(latitude, longitude);
+                    var mapOptions = {
+                        center: latLong,
+                        zoom: 10,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                    var marker = new google.maps.Marker({
+                        position: latLong,
+                        map: map,
+                        title: 'my location'
+                    });    
+                    $('#geolocation').show();
                 }
             });
         }
@@ -917,3 +935,4 @@ function onWeatherError(error) {
     console.log('code: ' + error.code + '\n' +
         'message: ' + error.message + '\n');
 }
+
