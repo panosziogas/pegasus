@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.megster.bluetooth.led" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>IntelliPowebox</name>
+    <name>Intelli Powerbox</name>
     <description>
-        PhoneGap app for controlling an Adafruit NeoPixel LED strip via Bluetooth Serial
+       Intelli Powerbox is just the answer to many observatory power requirements. period.
     </description>
-    <author href="https://github.com/don">
-        Don Coleman
+    <author href="http://pegasusastro.com/">
+        Pegasus Astro
     </author>
     <content src="index.html" />
     <access origin="*" />		

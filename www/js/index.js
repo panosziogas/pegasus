@@ -75,16 +75,6 @@ var app = {
         saveLabels.ontouchstart = fileHandler.getLabelValueAndSave;
         fileHandler.getLabesOnStart();
         disconnectButton.ontouchstart = blueToothCtrl.disconnect;
-    },
-    timeoutId: 0,
-    setStatus: function(status) {
-        if (app.timeoutId) {
-            clearTimeout(app.timeoutId);
-        }
-        messageDiv.innerText = status;
-        app.timeoutId = setTimeout(function() {
-            messageDiv.innerText = "";
-        }, 4000);
     }
 };
 
@@ -849,6 +839,7 @@ var appearance = {
         setLcdValue(currLcd, 0);
         setLcdValue(powLcd, 0);
         $('#geolocation').hide();
+        $('#dewAuto').hide();
     },
     revealElements: function() {
         $("#disconnectButton").show();

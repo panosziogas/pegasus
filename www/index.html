@@ -34,7 +34,7 @@
                   </span>
                   </button>-->
                </a>
-               <span class="navbar-brand" href="#"><img src="img/pegasus.png" class="img-responsive logo"/>
+               <span class="navbar-brand" href="#"><img src="img/pegasus_logo.png" class="img-responsive logo"/>
                </span> 
                <div class="dropdown pull-right"> </div>
             </div>
@@ -129,6 +129,13 @@
                         </span>
                      </a>
                   </li>
+                   <li role="presentation">
+                     <a href="#pegasus_info" aria-controls="info_tab" role="tab" data-toggle="tab">
+                        <span class="glyphicon glyphicon-info-sign">
+                           <!--<img src="img/bluetooth.svg"/>-->
+                        </span>
+                     </a>
+                  </li>
                </ul>
                <!-- Tab panes -->
                <div class="tab-content">
@@ -213,7 +220,7 @@
                                  </td>
                                  <td>
                                     <div class="checkbox">
-                                       <label><input id="dewAuto" type="checkbox" onClick="dewHeatersCtrl.dewHeatersAuto()">AUTO</label>
+                                       <label><input id="dewAuto" type="checkbox" onClick="dewHeatersCtrl.dewHeatersAuto()"></label>
                                     </div>
                                  </td>
                               </tr>
@@ -423,10 +430,14 @@
                         <button class="btn btn-primary btn-sm" id="saveLabels">Save</button>
                      </div>
                   </div>
+                   <div role="tabpanel" class="tab-pane" id="pegasus_info">
+                       <p>Pegasus Astro Intelli-Powerbox ®</p><br>
+                       <p>Copyright 2016</p><br>
+                       <p>For any question or support contact info@pegasusastro.com</p>
+                   </div>
                </div>
             </div>
-         </div>
-         <div id="messageDiv">
+         </div>        
             <!--             Card Projects 
                <div class="col-md-6 col-md-offset-3">
                    <div class="card">
@@ -488,8 +499,7 @@
                       </div>
                       <div class="modal-footer"> <button type="button" class="close-btn" data-dismiss="modal">Close</button> </div>
                    </div>-->
-         </div>
-      </div>
+         </div>     
       <script src="./js/jquery.min.js"></script>
       <script src="./js/custom.js"></script> 
       <script src="./js/bootstrap.min.js"></script>
