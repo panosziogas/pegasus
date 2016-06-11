@@ -802,11 +802,12 @@ var fileHandler = {
         fileEntry.file(function(file) {
             var reader = new FileReader();
             reader.onloadend = function() {
-                var labelsArray = this.result.split(";");
+                if(this.result){
+                var labelsArray = this.result.split(";");          
                 var outuput1 = labelsArray[0];
                 var outuput2 = labelsArray[1];
                 var outuput3 = labelsArray[2];
-                var outuput4 = labelsArray[3];
+                var outuput4 = labelsArray[3];                     
                 document.getElementById("label1").innerHTML = outuput1;
                 document.getElementById("label2").innerHTML = outuput2;
                 document.getElementById("label3").innerHTML = outuput3;
@@ -815,6 +816,7 @@ var fileHandler = {
                 document.getElementById("output2").value = outuput2;
                 document.getElementById("output3").value = outuput3;
                 document.getElementById("output4").value = outuput4;
+            }
             };
             reader.readAsText(file);
         }, fileHandler.getFileSystemError());

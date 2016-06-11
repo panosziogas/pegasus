@@ -11,7 +11,6 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <link rel="stylesheet" type="text/css" href="./css/boot.css"/>
-      <link href="fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="./css/style.css"/>
       <link href="./css/navbar-fixed-top.css" rel="stylesheet">
       <link href="./css/custom-style.css" rel="stylesheet">
@@ -91,13 +90,6 @@
             <!-- Nav tabs -->
             <div class="card">
                <ul class="nav nav-tabs" role="tablist">
-                  <!--                  <li role="presentation"  class="active">
-                     <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
-                        <span class="glyphicon glyphicon-home">
-                           <img src="img/home.svg"/>
-                        </span>
-                     </a>
-                     </li>-->
                   <li role="presentation">
                      <a href="#export" aria-controls="export" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-export"></span><!--<img src="img/export.svg"/>-->
@@ -105,51 +97,36 @@
                   </li>
                   <li role="presentation">
                      <a href="#input" aria-controls="input" role="tab" data-toggle="tab">
-                        <span class="glyphicon glyphicon-import"></span><!--<img src="img/import.svg"/>-->
+                     <span class="glyphicon glyphicon-import"></span>
                      </a>
                   </li>
                   <li role="presentation">
                      <a href="#geolocation_tab" aria-controls="geolocation_tab" role="tab" data-toggle="tab">
-                        <span class="glyphicon glyphicon-screenshot">
-                           <!--<img src="img/geolocation.svg"/>-->
-                        </span>
+                     <span class="glyphicon glyphicon-screenshot">                          
+                     </span>
                      </a>
                   </li>
                   <li role="presentation">
                      <a href="#digital_flatbox" aria-controls="flatbox_tab" role="tab" data-toggle="tab">
-                        <span class="glyphicon glyphicon-fullscreen">
-                           <!--<img src="img/geolocation.svg"/>-->
-                        </span>
+                     <span class="glyphicon glyphicon-fullscreen">                          
+                     </span>
                      </a>
                   </li>
                   <li role="presentation" class="active">
                      <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">
-                        <span class="glyphicon glyphicon-wrench">
-                           <!--<img src="img/bluetooth.svg"/>-->
-                        </span>
+                     <span class="glyphicon glyphicon-wrench">                         
+                     </span>
                      </a>
                   </li>
-                   <li role="presentation">
+                  <li role="presentation">
                      <a href="#pegasus_info" aria-controls="info_tab" role="tab" data-toggle="tab">
-                        <span class="glyphicon glyphicon-info-sign">
-                           <!--<img src="img/bluetooth.svg"/>-->
-                        </span>
+                     <span class="glyphicon glyphicon-info-sign">                     
+                     </span>
                      </a>
                   </li>
                </ul>
                <!-- Tab panes -->
                <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane" id="home">
-                     <img src="img/pegasus_head.JPG">
-                     <br>
-                     Pegasus Astro was created by amateur astronomers for amateur astronomers. Having been familiar with the field of astrophotography for more than ten years, we decided to create reliable and good priced products for use in amateur astronomy.<br><br>
-                     These are our own personal astrophotography webpages:<br><br>
-                     <a href="http://celestialpixels.com">http://celestialpixels.com</a> <br>
-                     <a href=" http://astrocorinth.webs.com"> http://astrocorinth.webs.com</a> <br><br>              
-                     We have realized that in this area many products we purchase are overpriced. As we are also activated in the field of astrophotography every new moon, we are well aware of any kind of difficulties and effort that are involved in order to create a decent astrophotograph.
-                     We, for this reason, are certain that we know exactly what your needs are and what you require from our products.<br><br>
-                     We are established in Athens, Greece and are confident we will not let you down.
-                  </div>
                   <div role="tabpanel" class="tab-pane" id="export">
                      <div id="connectionWait"></div>
                      <div id="powerToggles">
@@ -348,7 +325,6 @@
                   <div role="tabpanel" class="tab-pane" id="digital_flatbox">
                      <p>Use your mobile device as a flatbox surface.</p>
                      <p>Dim the brightness of your screen  to capture the required ADU for your flat calibration files.</p>
-<!--                     <button class="btn btn-primary btn-sm" id="flatboxLoader" onclick="window.location.href='digitalFlatBox.html'">Launch FlatBlet</button>                                         -->
                      <button class="btn btn-primary btn-sm" id="flatboxLoader" data-toggle="modal" data-target="#modal-fullscreen">                                
                      Launch FlatBlet
                      </button>                     
@@ -367,14 +343,15 @@
                                              <div class="rangeDiv">
                                                 <input type="range"  min="0" max="1" value="1" step ="0.01" name="dimDisplaySlider2" id="dimDisplaySlider2" class="topcoat-range"/>
                                                 <div class="checkbox">
-                                                    <label><input id="screenOnModal" type="checkbox" onClick="screenBrightness.lcdModalOn()"><font color="black">Keep Display ON</font</label>
+                                                   <label><input id="screenOnModal" type="checkbox" onClick="screenBrightness.lcdModalOn()"><font color="black">Keep Display ON</font</label>
                                                 </div>
                                              </div>
-                                          </td>                        
+                                          </td>
                                        </tr>
                                     </tbody>
                                  </table>
-                                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                               </div>
                               <div class="modal-footer">
                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -430,94 +407,41 @@
                         <button class="btn btn-primary btn-sm" id="saveLabels">Save</button>
                      </div>
                   </div>
-                   <div role="tabpanel" class="tab-pane" id="pegasus_info">
-                       <p>Pegasus Astro Intelli-Powerbox ®</p><br>
-                       <p>Copyright 2016</p><br>
-                       <p>For any question or support contact info@pegasusastro.com</p>
-                   </div>
+                  <div role="tabpanel" class="tab-pane" id="pegasus_info">
+                     <table class="tableInfo">
+                        <tbody>
+                           <tr>
+                              <td><img src="img/pegasus_head.JPG"><br><br></td>
+                           </tr>
+                           <tr>
+                              <td>Pegasus Astro Intelli-Powerbox ®<br><br></td>
+                           </tr>
+                           <tr>
+                              <td>Copyright 2016<br><br></td>
+                           </tr>
+                           <tr>
+                              <td>For any question or support contact info@pegasusastro.com<br><br></td>
+                           </tr>
+                        <tbody>
+                     </table>
+                  </div>
                </div>
             </div>
-         </div>        
-            <!--             Card Projects 
-               <div class="col-md-6 col-md-offset-3">
-                   <div class="card">
-                       <div class="card-image">
-                           <img class="img-responsive" src="img/follow.png">
-                           <span class="card-title">Material Cards</span>
-                       </div>
-                       
-                       <div class="card-content">
-                           <p>Cards for display in portfolio style material design by Google.</p>
-                       </div>
-                       
-                       <div class="card-action">
-                           <a href="#" target="new_blank">Link</a>
-                           <a href="#" target="new_blank">Link</a>
-                           <a href="#" target="new_blank">Link</a>
-                           <a href="#" target="new_blank">Link</a>
-                           <a href="#" target="new_blank">Link</a>
-                       </div>
-                   </div>
-               </div>  
-               
-                 <div class="col-md-4 col-md-offset-4">
-               <div class="material-button-anim">
-                 <ul class="list-inline" id="options">
-                   <li class="option">
-                     <button class="material-button option1" type="button">
-                       <span class="fa fa-phone" aria-hidden="true"></span>
-                     </button>
-                   </li>
-                   <li class="option">
-                     <button class="material-button option2" type="button">
-                       <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                     </button>
-                   </li>
-                   <li class="option">
-                     <button class="material-button option3" type="button">
-                       <span class="fa fa-pencil" aria-hidden="true"></span>
-                     </button>
-                   </li>
-                 </ul>
-                 <button class="material-button material-button-toggle" type="button">
-                   <span class="fa fa-plus" aria-hidden="true"></span>
-                 </button>
-               </div>
-               </div>
-                 
-                </div>
-               </div>
-               <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style=" z-index:999999999 !important">
-                <div class="modal-dialog" role="document">
-                   <div class="modal-content">
-                      <div class="modal-header">
-                         <h4 class="modal-title" id="myModalLabel">Contact Us</h4>
-                      </div>
-                      <div class="modal-body" align="center">
-                         <h5>Designed By Sharda Enterprises</h5>
-                         <h6>Powered By fastlearning.in</h6>
-                      </div>
-                      <div class="modal-footer"> <button type="button" class="close-btn" data-dismiss="modal">Close</button> </div>
-                   </div>-->
-         </div>     
+         </div>
+      </div>
       <script src="./js/jquery.min.js"></script>
       <script src="./js/custom.js"></script> 
       <script src="./js/bootstrap.min.js"></script>
       <script type="text/javascript" src="cordova.js"></script>
-      <script type="text/javascript" src="js/index.js"></script>
-      <!--<script src="js/jquery-1.9.1.min.js"></script>-->
+      <script type="text/javascript" src="js/index.js"></script>     
       <script type="text/javascript" src="js/underscore-min.js"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5LRLSJLZwdbJ1UdOVinb-mze_RJb5lxE"> </script>
-      <!--      <script src="http://code.highcharts.com/3.0.5/highcharts.js"></script>
-         <script src="http://code.highcharts.com/3.0.5/highcharts-more.js"></script>-->
-      <script type='text/javascript' src='js/tween.js'></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5LRLSJLZwdbJ1UdOVinb-mze_RJb5lxE"> </script>      
       <script type='text/javascript' src='js/steelseries-min.js'></script>
       <script type="text/javascript" src="js/progressbar.min.js"></script>
       <script type="text/javascript" src="js/toggleable-button.js"></script>  
       <script type="text/javascript" src="js/bootstrap-switch.js"></script>  
       <script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
-      <script language="javascript" type="text/javascript" src="js/jquery.flot.time.js"></script>
-      <!--      <script language="javascript" type="text/javascript" src="js/Smooth.js"></script>-->
+      <script language="javascript" type="text/javascript" src="js/jquery.flot.time.js"></script>     
       <script type="text/javascript">
          app.initialize();
       </script>     
