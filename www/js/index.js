@@ -61,7 +61,7 @@ var app = {
 
         var brightNessOnChange = _.throttle(screenBrightness.dimLcd, 50);
         $('#dimDisplaySlider').on('change', brightNessOnChange);
-        
+
         var brightNessOnChange2 = _.throttle(screenBrightness.dimLcdModal, 50);
         $('#dimDisplaySlider2').on('change', brightNessOnChange2);
 
@@ -71,7 +71,7 @@ var app = {
         refreshButton.ontouchstart = blueToothCtrl.list;
         refreshGeoButton.ontouchstart = geo.refreshGeo;
         heatersOff.ontouchstart = dewHeatersCtrl.dewHeatersOff;
-        heatersFull.ontouchstart = dewHeatersCtrl.dewHeatersMax;       
+        heatersFull.ontouchstart = dewHeatersCtrl.dewHeatersMax;
         saveLabels.ontouchstart = fileHandler.getLabelValueAndSave;
         fileHandler.getLabesOnStart();
         disconnectButton.ontouchstart = blueToothCtrl.disconnect;
@@ -79,14 +79,14 @@ var app = {
 };
 
 var blueToothCtrl = {
-    list: function(event) {       
+    list: function(event) {
         bluetoothSerial.list(blueToothCtrl.ondevicelist, blueToothCtrl.generateFailureFunction("List Failed"));
     },
     connect: function(e) {
-        device = e.target.getAttribute('deviceId');      
+        device = e.target.getAttribute('deviceId');
         bluetoothSerial.connect(device, blueToothCtrl.onconnect(device), blueToothCtrl.ondisconnect);
     },
-    disconnect: function(event) {       
+    disconnect: function(event) {
         console.log(event);
         bluetoothSerial.disconnect(blueToothCtrl.ondisconnect, false);
     },
@@ -124,7 +124,7 @@ var blueToothCtrl = {
     },
     ondevicelist: function(devices) {
         var listItem, deviceId;
-        deviceList.innerHTML = "";       
+        deviceList.innerHTML = "";
 
         devices.forEach(function(device) {
             listItem = document.createElement('li');
@@ -294,7 +294,7 @@ var lcdScreens = {
     },
     humLcd: function() {
         var sections = [steelseries.Section(0, 80, 'rgba(51, 122, 183, 1.0)'),
-            steelseries.Section(80, 100, 'rgba(255, 0, 0, 1.0)')            
+            steelseries.Section(80, 100, 'rgba(255, 0, 0, 1.0)')
         ];
 
         humidityLcd = new steelseries.DisplaySingle('canvasSingle2', {
@@ -747,10 +747,10 @@ var screenBrightness = {
         var checked = document.getElementById("screenOnModal").checked;
         if (checked === true) {
             VolumeControl.setKeepScreenOn(true);
-             console.log("Dim true");
+            console.log("Dim true");
         } else {
             VolumeControl.setKeepScreenOn(false);
-             console.log("Dim false");
+            console.log("Dim false");
         }
     }
 };
@@ -802,21 +802,21 @@ var fileHandler = {
         fileEntry.file(function(file) {
             var reader = new FileReader();
             reader.onloadend = function() {
-                if(this.result){
-                var labelsArray = this.result.split(";");          
-                var outuput1 = labelsArray[0];
-                var outuput2 = labelsArray[1];
-                var outuput3 = labelsArray[2];
-                var outuput4 = labelsArray[3];                     
-                document.getElementById("label1").innerHTML = outuput1;
-                document.getElementById("label2").innerHTML = outuput2;
-                document.getElementById("label3").innerHTML = outuput3;
-                document.getElementById("label4").innerHTML = outuput4;
-                document.getElementById("output1").value = outuput1;
-                document.getElementById("output2").value = outuput2;
-                document.getElementById("output3").value = outuput3;
-                document.getElementById("output4").value = outuput4;
-            }
+                if (this.result) {
+                    var labelsArray = this.result.split(";");
+                    var outuput1 = labelsArray[0];
+                    var outuput2 = labelsArray[1];
+                    var outuput3 = labelsArray[2];
+                    var outuput4 = labelsArray[3];
+                    document.getElementById("label1").innerHTML = outuput1;
+                    document.getElementById("label2").innerHTML = outuput2;
+                    document.getElementById("label3").innerHTML = outuput3;
+                    document.getElementById("label4").innerHTML = outuput4;
+                    document.getElementById("output1").value = outuput1;
+                    document.getElementById("output2").value = outuput2;
+                    document.getElementById("output3").value = outuput3;
+                    document.getElementById("output4").value = outuput4;
+                }
             };
             reader.readAsText(file);
         }, fileHandler.getFileSystemError());
@@ -890,26 +890,26 @@ function getWeather(latitude, longitude) {
                     $('#weather_humidity').text("Humidity: " + results.main.humidity + " %");
                     $('#weather_visibility').text("Visibility: " + results.weather[0].main);
                     $('#weather_pressure').text("Pressure: " + results.main.pressure.toFixed(1) + " mB");
-                    $('#lon').text("Longtitude: " + longitude.toFixed(2) +"°");
-                    $('#lat').text("Latitude: " + latitude.toFixed(2)+"°");
+                    $('#lon').text("Longtitude: " + longitude.toFixed(2) + "°");
+                    $('#lat').text("Latitude: " + latitude.toFixed(2) + "°");
                     $('#weather_temp_high').text("Max Temperature: " + results.main.temp_max.toFixed(1) + " °C");
                     $('#weather_temp_low').text("Min Temperature: " + results.main.temp_min.toFixed(1) + " °C");
-                    $('#wind_direction').text("Wind Direction: " + results.wind.deg.toFixed(0)+"°");
-                    $('#cloud_coverage').text("Cloud Coverage: " + results.clouds.all+"%");         
-                    
-                    var dateSunRise = new Date(results.sys.sunrise*1000);
+                    $('#wind_direction').text("Wind Direction: " + results.wind.deg.toFixed(0) + "°");
+                    $('#cloud_coverage').text("Cloud Coverage: " + results.clouds.all + "%");
+
+                    var dateSunRise = new Date(results.sys.sunrise * 1000);
                     var hoursSunRise = dateSunRise.getHours();
                     var minutesSunRise = "0" + dateSunRise.getMinutes();
                     var secondsSunRise = "0" + dateSunRise.getSeconds();
                     var formattedTimeSunRise = hoursSunRise + ':' + minutesSunRise.substr(-2) + ':' + secondsSunRise.substr(-2);
-                    $('#sunrise').text("Sunrise: " + formattedTimeSunRise); 
-                    
-                    var dateSunSet = new Date(results.sys.sunset*1000);
+                    $('#sunrise').text("Sunrise: " + formattedTimeSunRise);
+
+                    var dateSunSet = new Date(results.sys.sunset * 1000);
                     var hoursSunSet = dateSunSet.getHours();
                     var minutesSunSet = "0" + dateSunSet.getMinutes();
                     var secondsSunSet = "0" + dateSunSet.getSeconds();
                     var formattedTimeSunSet = hoursSunSet + ':' + minutesSunSet.substr(-2) + ':' + secondsSunSet.substr(-2);
-                    $('#sunset').text("Sunrise: " + formattedTimeSunSet); 
+                    $('#sunset').text("Sunrise: " + formattedTimeSunSet);
 
                     var latLong = new google.maps.LatLng(latitude, longitude);
                     var mapOptions = {
@@ -922,7 +922,7 @@ function getWeather(latitude, longitude) {
                         position: latLong,
                         map: map,
                         title: 'my location'
-                    });    
+                    });
                     $('#geolocation').show();
                 }
             });
@@ -936,4 +936,3 @@ function onWeatherError(error) {
     console.log('code: ' + error.code + '\n' +
         'message: ' + error.message + '\n');
 }
-
