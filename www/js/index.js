@@ -119,6 +119,12 @@ var blueToothCtrl = {
         appearance.hideElemenets();
         clearInterval(intervalId);
         $("#disconnectButton").hide();
+        temperatureChartData = [];
+        humidityChartData = [];
+        dewPointChartData = [];
+        voltageChartData = [];
+        currentChartData = [];
+        powerChartData = [];
         navigator.vibrate([500, 200, 500, 200, 500]);
         navigator.notification.alert("Disconnected from bluetooth device", blueToothCtrl.list, "Info", "ok");
     },
