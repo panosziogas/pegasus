@@ -882,7 +882,8 @@ var appearance = {
 }
 
 function getWeather(latitude, longitude) {
-    var OpenWeatherAppKey = "9d265e6d8e3b6619e15feba5537bbd69";
+//    var OpenWeatherAppKey = "9d265e6d8e3b6619e15feba5537bbd69";
+    var OpenWeatherAppKey = "48a90830d9f3e27cd4ef0536852fd438";
     var queryString = 'http://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=' +
         OpenWeatherAppKey + '&units=metric';
     console.log(queryString);

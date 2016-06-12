@@ -2,7 +2,7 @@
 <widget id="com.megster.bluetooth.led" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Intelli Powerbox</name>
     <description>
-       Intelli Powerbox is just the answer to many observatory power requirements. period.
+       Intelli Powerbox is just the answer to many observatory power requirements.
     </description>
     <author href="http://pegasusastro.com/">
         Pegasus Astro
