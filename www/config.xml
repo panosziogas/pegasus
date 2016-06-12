@@ -9,6 +9,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />		
+	<access origin="mailto:*" launch-external="yes" />
     <preference name="fullscreen" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <engine name="android" spec="~5.1.1" />
